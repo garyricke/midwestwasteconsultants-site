@@ -1,0 +1,20 @@
+# 301 redirect map — old live-site URLs → new structure. Preserves SEO equity.
+# Netlify processes these top-to-bottom; first match wins.
+
+# --- Service pages (were at root) ---
+/commercial-waste-disposal      /services/commercial-waste-disposal     301!
+/event-waste-management         /services/event-waste-management        301!
+/recycling-waste-management     /services/recycling-waste-management    301!
+/sustainability-programs        /services/sustainability-programs       301!
+/roll-off-dumpsters             /services/roll-off-dumpsters            301!
+/brokering-and-consulting       /services/brokering-and-consulting      301!
+
+# --- Renamed pages ---
+/about-us                       /about                                  301!
+/faqs                           /faq                                    301!
+
+# --- Local city pages (multiple old prefixes) → new areas-we-serve slugs ---
+# Old slug pattern: waste-management-company-<city>-il  → <city>-il
+/service-area/waste-management-company-*   /areas-we-serve/:splat       301!
+/areas-we-serve/waste-management-company-* /areas-we-serve/:splat       301!
+/waste-management-company-*                /areas-we-serve/:splat       301!

@@ -1,0 +1,104 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { SITE, SERVICE_AREAS, SERVICES } from "../../config/site";
+
+export function getStaticPaths() {
+  return SERVICE_AREAS.map((area) => ({ params: { slug: area.slug }, props: { area } }));
+}
+
+const { area } = Astro.props;
+const city = area.city;
+
+// A few nearby communities for internal linking (excludes current city).
+const nearby = SERVICE_AREAS.filter((a) => a.slug !== area.slug).slice(0, 6);
+
+// Consulting-led services to surface; roll-off routes to the app.
+const localServices = SERVICES.filter((s) =>
+  ["commercial-waste-disposal", "recycling-waste-management", "roll-off-dumpsters", "brokering-and-consulting"].includes(s.slug)
+);
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: `${SITE.legalName} — ${city}, ${area.state}`,
+    description: `Waste management, roll-off dumpsters, recycling, and consulting serving ${city}, ${area.state} and the surrounding Fox Valley.`,
+    url: new URL(`/areas-we-serve/${area.slug}`, SITE.url).href,
+    telephone: SITE.phone,
+    areaServed: { "@type": "City", name: `${city}, ${area.state}` },
+    address: { "@type": "PostalAddress", addressLocality: "Sugar Grove", addressRegion: "IL", addressCountry: "US" },
+  },
+];
+---
+
+<Layout
+  title={`Waste Management in ${city}, ${area.state}`}
+  description={`Reliable waste management, roll-off dumpsters, recycling, and waste consulting for ${city}, ${area.state}. Owner-operated, 30+ years, free estimates. Call ${SITE.phone}.`}
+  schema={schema}
+>
+  <section class="bg-navy">
+    <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+      <nav class="mb-5 text-sm text-white/55" aria-label="Breadcrumb">
+        <a href="/areas-we-serve" class="hover:text-orange">Areas We Serve</a>
+        <span class="px-1.5">/</span>
+        <span class="text-white/80">{city}, {area.state}</span>
+      </nav>
+      <span class="eyebrow border-l-2 border-orange pl-3">Waste Management · {city}, {area.state}</span>
+      <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        Waste management &amp; roll-off dumpsters in {city}.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-white/75">
+        Owner-operated service for {city} and the surrounding Fox Valley — backed by 30+ years and a 5-star reputation. Free estimates, and a real person on the phone.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact#quote" class="rounded-full bg-orange px-7 py-3.5 text-center font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">Get a free quote</a>
+        <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full border border-white/30 px-7 py-3.5 text-center font-display font-bold text-white transition-colors hover:bg-white/10">Order a dumpster ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 py-16 prose-mwc">
+    <p class="text-muted">
+      From a single roll-off dumpster for a home cleanout to ongoing commercial
+      service and recycling programs, Midwest Waste Consultants keeps {city}
+      businesses and residents covered. We're local — based just down the road in
+      Sugar Grove and Aurora — so we show up on time, size the container right,
+      and stand behind the work.
+    </p>
+    <p class="text-muted">
+      Running multiple locations beyond {city}? Our consulting and brokering team
+      audits your contracts and coordinates service nationwide, so a growing
+      business gets one consistent, fairly-priced program. <span class="text-muted/70">[Placeholder — add a {city}-specific note or local project example.]</span>
+    </p>
+
+    <h2 class="mt-10 text-2xl font-extrabold text-navy">Services in {city}</h2>
+    <div class="not-prose mt-5 grid gap-4 sm:grid-cols-2">
+      {
+        localServices.map((s) => (
+          <a href={s.appCta ? SITE.appUrl : `/services/${s.slug}`} target={s.appCta ? "_blank" : undefined} rel={s.appCta ? "noopener" : undefined} class="rounded-xl border border-rule bg-white p-5 transition-all hover:border-orange hover:shadow">
+            <h3 class="font-display text-base font-bold text-navy">{s.title}</h3>
+            <p class="mt-1.5 text-sm text-muted">{s.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-steel">
+    <div class="mx-auto max-w-6xl px-6 py-12">
+      <h2 class="font-display text-sm font-bold uppercase tracking-wide text-muted">Nearby communities we serve</h2>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {
+          nearby.map((n) => (
+            <a href={`/areas-we-serve/${n.slug}`} class="rounded-full border border-rule bg-white px-4 py-2 font-display text-sm font-semibold text-navy transition-colors hover:border-orange hover:text-orange">
+              {n.city}, {n.state}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading={`Serving ${city} and the whole Fox Valley.`} />
+</Layout>

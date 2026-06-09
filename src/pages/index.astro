@@ -1,0 +1,208 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Stars from "../components/Stars.astro";
+import { SITE, SERVICES, REVIEW_STATS, REVIEWS } from "../config/site";
+
+const featured = REVIEWS[0];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: SITE.legalName,
+    description: SITE.description,
+    url: SITE.url,
+    telephone: SITE.phone,
+    foundingDate: SITE.established,
+    areaServed: "United States",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Sugar Grove",
+      addressRegion: "IL",
+      addressCountry: "US",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: REVIEW_STATS.average,
+      reviewCount: REVIEW_STATS.count,
+    },
+    sameAs: [SITE.social.facebook, SITE.social.linkedin],
+  },
+];
+---
+
+<Layout schema={schema}>
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-navy">
+    <div class="absolute inset-0">
+      <img src="/images/marketing/hero-fox-valley-autumn.png" alt="" class="h-full w-full object-cover opacity-25" />
+      <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/95 to-navy/70"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
+      <span class="eyebrow border-l-2 border-orange pl-3">Waste Consulting · Brokering · Sustainability</span>
+      <h1 class="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+        Stop throwing your money in the trash.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
+        Most businesses overpay for waste service and never know it — buried in
+        surcharges, locked into auto-renewals, hauling half-empty containers. We
+        sit on <em>your</em> side of the table. Owner-operated, 30+ years in the
+        field, and a nationwide vendor network behind every recommendation.
+      </p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact#quote" class="rounded-full bg-orange px-8 py-4 text-center font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">
+          Get a Free Waste Review
+        </a>
+        <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full border border-white/30 px-8 py-4 text-center font-display font-bold text-white transition-colors hover:bg-white/10">
+          Need a dumpster now? →
+        </a>
+      </div>
+      <div class="mt-10 flex items-center gap-3 text-sm text-white/70">
+        <Stars rating={5} />
+        <span><span class="font-bold text-white">{REVIEW_STATS.average.toFixed(1)}</span> from {REVIEW_STATS.count} Google reviews</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF BAR -->
+  <section class="border-b border-rule bg-white">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden px-6 py-10 sm:grid-cols-4">
+      {
+        [
+          { n: "30+", l: "Years in the field" },
+          { n: "Owner", l: "Operated — talk to a person" },
+          { n: "50", l: "States we can broker across" },
+          { n: "5.0★", l: "Google rating" },
+        ].map((s) => (
+          <div class="px-4 text-center">
+            <div class="font-display text-3xl font-extrabold text-navy sm:text-4xl">{s.n}</div>
+            <div class="mt-1 text-sm text-muted">{s.l}</div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- VALUE PROP -->
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow">Why Midwest Waste</span>
+        <h2 class="mt-3 text-3xl font-extrabold text-navy sm:text-4xl">
+          The waste industry profits from confusion. We profit from clarity.
+        </h2>
+        <p class="mt-5 text-muted">
+          National haulers count on you not reading the fine print. We've spent
+          three decades on the other side of those contracts, and now we use that
+          knowledge for you — finding the overcharges, killing the auto-renewals,
+          and right-sizing service so you pay for what you actually throw away.
+        </p>
+        <ul class="mt-6 space-y-4">
+          {
+            [
+              ["Independent & on your side", "We're brokers and consultants, not a hauler chasing a quota. Our only job is lowering your cost and hassle."],
+              ["Local hands, national reach", "Our trucks run the Fox Valley; our brokering coordinates service across the country for multi-site clients."],
+              ["You talk to an owner", "No call center, no runaround. The person who answers can make a decision."],
+            ].map(([t, d]) => (
+              <li class="flex gap-3">
+                <svg class="mt-0.5 h-6 w-6 flex-shrink-0 text-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                <span><strong class="font-display text-navy">{t}.</strong> <span class="text-muted">{d}</span></span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-rule bg-steel p-8">
+        <p class="font-display text-xl font-bold leading-snug text-navy">
+          “{featured.body.slice(0, 220)}…”
+        </p>
+        <div class="mt-5 flex items-center gap-3">
+          <Stars rating={featured.rating} />
+          <span class="text-sm font-semibold text-navy">{featured.author}</span>
+          <span class="text-sm text-muted">· Google</span>
+        </div>
+        <a href="/reviews" class="mt-4 inline-block font-display text-sm font-bold text-orange hover:underline">Read all reviews →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="bg-steel">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <div class="max-w-2xl">
+        <span class="eyebrow">What We Do</span>
+        <h2 class="mt-3 text-3xl font-extrabold text-navy sm:text-4xl">From a single dumpster to a 500-location program.</h2>
+        <p class="mt-4 text-muted">Strategy and brokering up top; the hands-on services that built our reputation right alongside.</p>
+      </div>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          SERVICES.map((s) => (
+            <a href={s.appCta ? SITE.appUrl : `/services/${s.slug}`} target={s.appCta ? "_blank" : undefined} rel={s.appCta ? "noopener" : undefined} class="group flex flex-col rounded-2xl border border-rule bg-white p-7 transition-all hover:-translate-y-1 hover:border-orange hover:shadow-lg">
+              <h3 class="font-display text-lg font-bold text-navy group-hover:text-orange">{s.title}</h3>
+              <p class="mt-2 flex-1 text-sm text-muted">{s.summary}</p>
+              <span class="mt-4 font-display text-sm font-bold text-orange">
+                {s.appCta ? "Order on midwestwaste.app ↗" : "Learn more →"}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- TWO PATHS -->
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <div class="max-w-2xl">
+      <span class="eyebrow">Two Ways to Work With Us</span>
+      <h2 class="mt-3 text-3xl font-extrabold text-navy sm:text-4xl">One company. Two front doors.</h2>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      <div class="rounded-2xl border-2 border-navy bg-navy p-8 text-white">
+        <span class="eyebrow text-orange">This site</span>
+        <h3 class="mt-2 text-2xl font-extrabold">The Boardroom</h3>
+        <p class="mt-3 text-white/80">Consulting, contract brokering, sustainability programs, and multi-location strategy. Best when the question is bigger than one pickup.</p>
+        <a href="/services" class="mt-6 inline-block rounded-full bg-orange px-6 py-3 font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">Explore consulting</a>
+      </div>
+      <div class="rounded-2xl border-2 border-rule bg-white p-8">
+        <span class="eyebrow">midwestwaste.app</span>
+        <h3 class="mt-2 text-2xl font-extrabold text-navy">The Driveway</h3>
+        <p class="mt-3 text-muted">Need a roll-off dumpster this week? Pick a size, pay online, and we route it to the closest qualified hauler. Fast, transactional, no phone tag.</p>
+        <a href={SITE.appUrl} target="_blank" rel="noopener" class="mt-6 inline-block rounded-full border border-navy px-6 py-3 font-display font-bold text-navy transition-colors hover:bg-navy hover:text-white">Order a dumpster ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDIBILITY / CASE -->
+  <section class="bg-navy-deep">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow text-orange">Proven on the big stage</span>
+        <h2 class="mt-3 text-3xl font-extrabold text-white sm:text-4xl">We managed the waste &amp; recycling for LIV Golf at Rich Harvest Farms.</h2>
+        <p class="mt-4 text-white/75">
+          Major events are waste management on hard mode — high volume, tight
+          windows, zero room for error, and a brand watching. We planned the
+          containers, integrated recycling, and coordinated cleanup. <span class="text-white/50">[Placeholder — expand with results, tonnage, and photos.]</span>
+        </p>
+        <a href="/services/event-waste-management" class="mt-6 inline-block font-display font-bold text-orange hover:underline">See event services →</a>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-white/10">
+        <img src="/images/marketing/fpv-neighborhood.png" alt="Aerial drone view over a Fox Valley neighborhood" class="h-full w-full object-cover" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES TEASER -->
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <div class="flex flex-col items-start justify-between gap-6 rounded-2xl bg-steel p-10 md:flex-row md:items-center">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Resources & The Podcast</span>
+        <h2 class="mt-3 text-2xl font-extrabold text-navy sm:text-3xl">Learn how the waste game really works.</h2>
+        <p class="mt-3 text-muted">Plain-spoken breakdowns of contract traps, diversion wins, and stories from the route — including our upcoming podcast. <span class="text-muted/70">[Podcast launching soon.]</span></p>
+      </div>
+      <a href="/resources" class="rounded-full bg-navy px-7 py-3.5 font-display font-extrabold text-white transition-transform hover:-translate-y-0.5">Browse resources</a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

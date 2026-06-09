@@ -1,0 +1,78 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { SITE } from "../config/site";
+---
+
+<Layout
+  title="About Us"
+  description="Midwest Waste Consultants is an owner-operated waste consulting and brokering firm with 30+ years in the field, based in the Illinois Fox Valley and serving clients nationwide."
+>
+  <PageHero
+    eyebrow="About Us"
+    title="Thirty years on the trucks. Now in your corner."
+    subtitle="We're not a national hauler with a friendly logo. We're the people who spent careers inside this industry — and decided to use what we learned for the customer instead of against them."
+  />
+
+  <section class="mx-auto max-w-3xl px-6 py-16 prose-mwc">
+    <span class="eyebrow">Our Story</span>
+    <h2 class="mt-2 text-3xl font-extrabold text-navy">Owner-operated since {SITE.established}.</h2>
+    <p class="text-muted">
+      Midwest Waste Consultants was built on a simple frustration: businesses
+      were getting buried by waste contracts written to confuse them. Auto-renewal
+      clauses. Surcharges that appeared out of nowhere. Containers sized to bill
+      more, not to fit the job. After 30+ years working in waste and hauling, we
+      knew exactly where the money leaks — so we started a company to plug it.
+    </p>
+    <p class="text-muted">
+      Today we do two things. Our trucks handle hands-on hauling and roll-off
+      service across the Illinois Fox Valley — Sugar Grove, Aurora, and the
+      surrounding communities. And our consulting and brokering practice works
+      <em>nationally</em>, sourcing and negotiating service for businesses with one
+      location or hundreds. <span class="text-muted/70">[Placeholder — add founder name(s), bios, and a team photo.]</span>
+    </p>
+
+    <h2 class="mt-10 text-2xl font-extrabold text-navy">The bear and the sphere</h2>
+    <p class="text-muted">
+      You've seen our trucks. The bear pushing the sphere isn't just a logo — it's
+      the job. Strength, persistence, and momentum: moving heavy things forward,
+      reliably, every day. It's the most recognizable mark in the Fox Valley waste
+      business, and it stands for an old-fashioned promise — show up, do the work,
+      stand behind it.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-extrabold text-navy">The anti-Waste-Management</h2>
+    <p class="text-muted">
+      Big national haulers are good at one thing: being big. You become an account
+      number, your rate creeps every year, and getting a human on the phone is a
+      project. We're the opposite by design. When you call, you talk to an owner.
+      When you have a problem, the person you reach can fix it. That's not a
+      marketing line — it's the entire reason we exist.
+    </p>
+  </section>
+
+  <!-- VALUES -->
+  <section class="bg-steel">
+    <div class="mx-auto max-w-6xl px-6 py-16">
+      <span class="eyebrow">What We Stand For</span>
+      <h2 class="mt-2 text-3xl font-extrabold text-navy">Plainspoken. Experienced. Direct.</h2>
+      <div class="mt-8 grid gap-5 sm:grid-cols-3">
+        {
+          [
+            ["Strength", "The muscle behind hands-on hauling and three decades of operational know-how."],
+            ["Momentum", "We move things forward — for the route and for your bottom line."],
+            ["Trust", "High-contrast honesty. Speak to an owner, get a straight answer."],
+          ].map(([t, d]) => (
+            <div class="rounded-2xl border-l-4 border-orange bg-white p-6">
+              <h3 class="font-display text-lg font-bold text-navy">{t}</h3>
+              <p class="mt-2 text-sm text-muted">{d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

@@ -1,0 +1,81 @@
+---
+import { SITE, NAV, SERVICES } from "../config/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-navy text-white/75">
+  <div class="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-2 lg:grid-cols-4">
+    <!-- Brand -->
+    <div>
+      <div class="flex items-center gap-3">
+        <img src="/images/logo-midewest-waste-redraw-no-text.svg" alt="" class="h-12 w-12" width="48" height="48" />
+        <span class="leading-none">
+          <span class="block font-display text-base font-extrabold tracking-tight text-white">MIDWEST WASTE</span>
+          <span class="block font-display text-[0.6rem] font-semibold uppercase tracking-[0.28em] text-white/60">Consultants</span>
+        </span>
+      </div>
+      <p class="mt-4 text-sm leading-relaxed">
+        Owner-operated waste consulting, brokering, and sustainability — 30+ years
+        in the field. Based in {SITE.baseCity}, serving clients nationwide.
+      </p>
+      <div class="mt-4 flex gap-3">
+        <a href={SITE.social.facebook} aria-label="Facebook" class="text-white/70 transition-colors hover:text-orange" target="_blank" rel="noopener">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href={SITE.social.linkedin} aria-label="LinkedIn" class="text-white/70 transition-colors hover:text-orange" target="_blank" rel="noopener">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.99H5.67v8.35h2.67zM7 8.81a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zm11.34 9.53v-4.58c0-2.45-1.31-3.59-3.06-3.59a2.64 2.64 0 0 0-2.39 1.31V9.99h-2.67v8.35h2.67v-4.41c0-1.16.22-2.29 1.66-2.29 1.42 0 1.44 1.33 1.44 2.37v4.33h2.35z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div>
+      <h4 class="font-display text-xs font-bold uppercase tracking-[0.16em] text-white">Services</h4>
+      <ul class="mt-4 space-y-2 text-sm">
+        {SERVICES.map((s) => (
+          <li><a href={`/services/${s.slug}`} class="transition-colors hover:text-orange">{s.title}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Quick links -->
+    <div>
+      <h4 class="font-display text-xs font-bold uppercase tracking-[0.16em] text-white">Company</h4>
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><a href="/" class="transition-colors hover:text-orange">Home</a></li>
+        {NAV.filter((n) => n.label !== "Services").map((n) => (
+          <li><a href={n.href} class="transition-colors hover:text-orange">{n.label}</a></li>
+        ))}
+        <li>
+          <a href={SITE.appUrl} class="transition-colors hover:text-orange" target="_blank" rel="noopener">
+            Order a Dumpster ↗
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h4 class="font-display text-xs font-bold uppercase tracking-[0.16em] text-white">Contact</h4>
+      <ul class="mt-4 space-y-3 text-sm">
+        <li>
+          <a href={SITE.phoneHref} class="font-display text-lg font-extrabold text-orange">{SITE.phone}</a>
+        </li>
+        <li>{SITE.baseCity}</li>
+        {SITE.hours.map((h) => (
+          <li><span class="text-white/55">{h.days}:</span> {h.time}</li>
+        ))}
+      </ul>
+      <a href="/contact#quote" class="mt-5 inline-block rounded-full bg-orange px-5 py-2.5 font-display text-sm font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">
+        Get a Free Quote
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-5 text-xs text-white/55 md:flex-row md:items-center md:justify-between">
+      <span>© {year} {SITE.legalName}. All rights reserved.</span>
+      <span class="font-display uppercase tracking-[0.12em]">Free Estimates · Licensed &amp; Insured · Military Discounts</span>
+    </div>
+  </div>
+</footer>

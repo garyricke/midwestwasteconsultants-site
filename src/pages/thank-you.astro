@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE } from "../config/site";
+---
+
+<Layout title="Thank You" description="Thanks for reaching out to Midwest Waste Consultants." noindex={true}>
+  <section class="mx-auto max-w-2xl px-6 py-28 text-center">
+    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-orange/15 text-orange">
+      <svg class="h-9 w-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h1 class="mt-6 text-4xl font-extrabold text-navy">Got it — thank you.</h1>
+    <p class="mt-4 text-muted">
+      Your request is in. We respond within one business day. Need us sooner?
+      Call <a href={SITE.phoneHref} class="font-semibold text-orange">{SITE.phone}</a>.
+    </p>
+    <a href="/" class="mt-8 inline-block rounded-full bg-navy px-7 py-3.5 font-display font-extrabold text-white transition-transform hover:-translate-y-0.5">Back to home</a>
+  </section>
+</Layout>

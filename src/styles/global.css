@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* @fontsource self-hosts the brand fonts (no external Google Fonts request) */
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/600.css";
+@import "@fontsource/montserrat/700.css";
+@import "@fontsource/montserrat/800.css";
+@import "@fontsource/open-sans/400.css";
+@import "@fontsource/open-sans/600.css";
+@import "@fontsource/open-sans/700.css";
+
+/* ---------------------------------------------------------------------------
+   Brand tokens — single source of truth (Brand Standards Guide v1.0)
+   Navy + white carry ~85% of any composition; orange is a spice (<10%).
+--------------------------------------------------------------------------- */
+@theme {
+  --color-navy: #1b365d;
+  --color-navy-deep: #142849;
+  --color-orange: #ff8200;
+  --color-steel: #f4f4f4;
+  --color-rule: #e2e6ee;
+  --color-ink: #142849;
+  --color-muted: #5b6878;
+
+  --font-display: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Reusable eyebrow label (orange, all-caps, tracked) */
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+}
+
+/* Long-form prose blocks (service detail, about, articles) */
+.prose-mwc p {
+  margin-bottom: 1.1em;
+  line-height: 1.7;
+}
+.prose-mwc h2 {
+  margin: 1.6em 0 0.5em;
+}
+.prose-mwc h3 {
+  margin: 1.4em 0 0.4em;
+}
+.prose-mwc ul {
+  list-style: disc;
+  padding-left: 1.3em;
+  margin-bottom: 1.1em;
+}
+.prose-mwc li {
+  margin-bottom: 0.4em;
+}

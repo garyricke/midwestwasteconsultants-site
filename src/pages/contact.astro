@@ -1,0 +1,118 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import { SITE, SERVICES } from "../config/site";
+---
+
+<Layout
+  title="Contact & Free Quote"
+  description="Get a free, no-obligation waste review. Call 630-800-8549 or request a quote online. Owner-operated, based in Sugar Grove & Aurora, IL."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Get a free quote — talk to an owner."
+    subtitle="Tell us what you're dealing with. We'll give you a straight answer and a real number, with no obligation."
+  />
+
+  <section class="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_1fr]">
+    <!-- FORM -->
+    <div id="quote" class="scroll-mt-24">
+      <h2 class="text-2xl font-extrabold text-navy">Request a quote</h2>
+      <p class="mt-2 text-muted">Prefer to talk? Call <a href={SITE.phoneHref} class="font-semibold text-orange">{SITE.phone}</a>.</p>
+
+      <form
+        name="quote"
+        method="POST"
+        action="/thank-you"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        class="mt-6 space-y-5"
+      >
+        <input type="hidden" name="form-name" value="quote" />
+        <p class="hidden">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="font-display text-sm font-semibold text-navy">Name *</span>
+            <input type="text" name="name" required class="mt-1.5 w-full rounded-lg border border-rule px-4 py-3 outline-none focus:border-orange" />
+          </label>
+          <label class="block">
+            <span class="font-display text-sm font-semibold text-navy">Company</span>
+            <input type="text" name="company" class="mt-1.5 w-full rounded-lg border border-rule px-4 py-3 outline-none focus:border-orange" />
+          </label>
+          <label class="block">
+            <span class="font-display text-sm font-semibold text-navy">Email *</span>
+            <input type="email" name="email" required class="mt-1.5 w-full rounded-lg border border-rule px-4 py-3 outline-none focus:border-orange" />
+          </label>
+          <label class="block">
+            <span class="font-display text-sm font-semibold text-navy">Phone</span>
+            <input type="tel" name="phone" class="mt-1.5 w-full rounded-lg border border-rule px-4 py-3 outline-none focus:border-orange" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="font-display text-sm font-semibold text-navy">What can we help with?</span>
+          <select name="service" class="mt-1.5 w-full rounded-lg border border-rule bg-white px-4 py-3 outline-none focus:border-orange">
+            <option value="">Select a service…</option>
+            {SERVICES.map((s) => <option value={s.title}>{s.title}</option>)}
+            <option value="Other / Not sure">Other / Not sure</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="font-display text-sm font-semibold text-navy">Tell us more *</span>
+          <textarea name="message" rows="4" required class="mt-1.5 w-full rounded-lg border border-rule px-4 py-3 outline-none focus:border-orange" placeholder="Locations, current hauler, what you're trying to solve…"></textarea>
+        </label>
+
+        <button type="submit" class="rounded-full bg-orange px-8 py-3.5 font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">
+          Send request
+        </button>
+        <p class="text-xs text-muted">Free estimates · No obligation · We respond within one business day.</p>
+      </form>
+    </div>
+
+    <!-- DETAILS -->
+    <aside class="space-y-8">
+      <div class="rounded-2xl border border-rule bg-steel p-7">
+        <h3 class="font-display text-lg font-bold text-navy">Reach us</h3>
+        <dl class="mt-4 space-y-4 text-sm">
+          <div>
+            <dt class="font-display text-xs uppercase tracking-wide text-muted">Phone</dt>
+            <dd><a href={SITE.phoneHref} class="font-display text-xl font-extrabold text-orange">{SITE.phone}</a></dd>
+          </div>
+          <div>
+            <dt class="font-display text-xs uppercase tracking-wide text-muted">Service base</dt>
+            <dd class="text-ink">{SITE.baseCity}</dd>
+          </div>
+          <div>
+            <dt class="font-display text-xs uppercase tracking-wide text-muted">Hours</dt>
+            <dd class="text-ink">
+              {SITE.hours.map((h) => <div>{h.days}: {h.time}</div>)}
+            </dd>
+          </div>
+        </dl>
+        <div class="mt-5 flex gap-3">
+          <a href={SITE.social.facebook} target="_blank" rel="noopener" class="font-display text-sm font-bold text-navy hover:text-orange">Facebook</a>
+          <a href={SITE.social.linkedin} target="_blank" rel="noopener" class="font-display text-sm font-bold text-navy hover:text-orange">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border-2 border-navy bg-navy p-7 text-white">
+        <h3 class="font-display text-lg font-bold">Just need a dumpster?</h3>
+        <p class="mt-2 text-sm text-white/80">Skip the form. Pick a size and order online in minutes.</p>
+        <a href={SITE.appUrl} target="_blank" rel="noopener" class="mt-4 inline-block rounded-full bg-orange px-6 py-3 font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">Order at midwestwaste.app ↗</a>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl border border-rule">
+        <iframe
+          title="Midwest Waste Consultants service area map"
+          src="https://www.google.com/maps?q=Sugar+Grove,+IL&output=embed"
+          class="h-64 w-full"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </aside>
+  </section>
+</Layout>

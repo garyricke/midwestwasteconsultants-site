@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { SITE, SERVICES } from "../../config/site";
+---
+
+<Layout
+  title="Services"
+  description="Waste consulting, brokering, sustainability, recycling, commercial disposal, event waste, and roll-off dumpsters — strategy and hands-on service from one owner-operated team."
+>
+  <PageHero
+    eyebrow="Services"
+    title="From the boardroom to the driveway."
+    subtitle="Strategy, brokering, and sustainability for the long game — and the hands-on hauling services that built our reputation."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        SERVICES.map((s) => (
+          <div class="flex flex-col rounded-2xl border border-rule bg-white p-8 transition-all hover:border-orange hover:shadow-lg">
+            <h2 class="font-display text-xl font-bold text-navy">{s.title}</h2>
+            <p class="mt-3 flex-1 text-muted">{s.summary}</p>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <a href={`/services/${s.slug}`} class="rounded-full border border-navy px-5 py-2.5 font-display text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white">
+                Learn more
+              </a>
+              {s.appCta && (
+                <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full bg-orange px-5 py-2.5 font-display text-sm font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">
+                  Order online ↗
+                </a>
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Stars from "../components/Stars.astro";
+import { SITE, REVIEWS, REVIEW_STATS } from "../config/site";
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: SITE.legalName,
+    url: SITE.url,
+    telephone: SITE.phone,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: REVIEW_STATS.average,
+      reviewCount: REVIEW_STATS.count,
+    },
+    review: REVIEWS.map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.author },
+      reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
+      reviewBody: r.body,
+    })),
+  },
+];
+---
+
+<Layout
+  title="Reviews"
+  description="What our customers say about Midwest Waste Consultants — 5.0 stars on Google."
+  schema={schema}
+>
+  <PageHero eyebrow="Reviews" title="What our customers have to say." />
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <div class="flex flex-col items-center gap-3 text-center">
+      <Stars rating={5} class="scale-125" />
+      <p class="font-display text-2xl font-extrabold text-navy">
+        {REVIEW_STATS.average.toFixed(1)} out of 5
+      </p>
+      <p class="text-muted">Based on {REVIEW_STATS.count} verified Google reviews</p>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {
+        REVIEWS.map((r) => (
+          <figure class="flex flex-col rounded-2xl border border-rule bg-white p-7">
+            <Stars rating={r.rating} />
+            <blockquote class="mt-4 flex-1 text-ink">{r.body}</blockquote>
+            <figcaption class="mt-5 border-t border-rule pt-4">
+              <span class="font-display font-bold text-navy">{r.author}</span>
+              <span class="text-sm text-muted"> · {r.date} · Google</span>
+              {r.ownerReply && (
+                <p class="mt-3 rounded-lg bg-steel p-3 text-sm text-muted">
+                  <span class="font-display font-semibold text-navy">Owner reply:</span> {r.ownerReply}
+                </p>
+              )}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <p class="mt-8 text-center text-sm text-muted">
+      Read more on our
+      <a href={SITE.social.facebook} target="_blank" rel="noopener" class="font-semibold text-orange">Facebook page</a>.
+    </p>
+  </section>
+
+  <CtaBand heading="Join the customers who stopped overpaying." />
+</Layout>

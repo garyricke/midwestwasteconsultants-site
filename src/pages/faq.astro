@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { FAQS } from "../config/site";
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  },
+];
+---
+
+<Layout
+  title="FAQ"
+  description="Answers to common questions about waste consulting, brokering, nationwide coordination, and recycling programs."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="FAQ"
+    title="Frequently asked questions."
+    subtitle="Straight answers about how waste consulting and brokering actually work."
+  />
+
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <div class="divide-y divide-rule rounded-2xl border border-rule bg-white">
+      {
+        FAQS.map((f, i) => (
+          <details class="group px-6" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-lg font-bold text-navy">
+              {f.question}
+              <svg class="h-5 w-5 flex-shrink-0 text-orange transition-transform group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </summary>
+            <p class="pb-5 text-muted">{f.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <p class="mt-8 text-center text-muted">
+      Still have a question? <a href="/contact#quote" class="font-semibold text-orange">Ask us directly →</a>
+    </p>
+  </section>
+
+  <CtaBand />
+</Layout>

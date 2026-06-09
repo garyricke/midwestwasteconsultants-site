@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+
+// Concept/marketing imagery placeholders — swap for real fleet, project, and
+// LIV Golf / Rich Harvest Farms photos + drone footage when available.
+const images = [
+  { src: "/images/marketing/hero-fox-valley-autumn.png", alt: "Fox Valley landscape in autumn" },
+  { src: "/images/marketing/fpv-neighborhood.png", alt: "Aerial drone view over a neighborhood" },
+  { src: "/images/marketing/fpv-country-road.png", alt: "Aerial drone view over a country road" },
+  { src: "/images/marketing/recording-in-cab.png", alt: "Recording in the truck cab" },
+  { src: "/images/concepts/concept-2-stacked.png", alt: "Brand mark — stacked lockup" },
+  { src: "/images/concepts/concept-4-monogram.png", alt: "Brand mark — monogram icon" },
+];
+---
+
+<Layout
+  title="Gallery"
+  description="A look at Midwest Waste Consultants — our work across the Fox Valley, event waste management, and drone footage from the field."
+>
+  <PageHero
+    eyebrow="Gallery"
+    title="A look at the work."
+    subtitle="From Fox Valley routes to tournament-scale events. [Placeholder — replace with real fleet, project, and LIV Golf photos + drone video.]"
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        images.map((img) => (
+          <div class="overflow-hidden rounded-2xl border border-rule bg-steel">
+            <img src={img.src} alt={img.alt} loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-500 hover:scale-105" />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>
