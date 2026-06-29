@@ -45,6 +45,8 @@ export type Service = {
   summary: string;
   // If set, the primary CTA on the card/page links out to the transactional app.
   appCta?: boolean;
+  // Hero photo for the service page (under /images/photos/).
+  image?: string;
 };
 
 // Consulting-led order. Transactional services deep-link to midwestwaste.app.
@@ -54,18 +56,21 @@ export const SERVICES: Service[] = [
     title: "Brokering & Consulting",
     summary:
       "We sit on your side of the table — auditing contracts, exposing auto-renewal traps, and leveraging a nationwide vendor network to cut your waste spend.",
+    image: "/images/photos/truck-logo.webp",
   },
   {
     slug: "sustainability-programs",
     title: "Sustainability Programs",
     summary:
       "Practical diversion strategies and reporting that move you toward real sustainability goals — not buzzwords.",
+    image: "/images/photos/tinley-nonhaz-2.webp",
   },
   {
     slug: "recycling-waste-management",
     title: "Recycling & Waste Diversion",
     summary:
       "Material identification, right-sized sorting systems, and landfill diversion that lowers cost while improving outcomes.",
+    image: "/images/photos/tinley-nonhaz-1.webp",
   },
   {
     slug: "commercial-waste-disposal",
@@ -73,12 +78,14 @@ export const SERVICES: Service[] = [
     summary:
       "Optimized collection schedules and compliance for businesses with one location or five hundred.",
     appCta: true,
+    image: "/images/photos/branded-frontloads.webp",
   },
   {
     slug: "event-waste-management",
     title: "Event Waste Management",
     summary:
       "Container planning, recycling integration, and cleanup for events of any scale — we've managed waste for the LIV Golf tournament at Rich Harvest Farms.",
+    image: "/images/photos/roll-off-containers.webp",
   },
   {
     slug: "roll-off-dumpsters",
@@ -86,6 +93,7 @@ export const SERVICES: Service[] = [
     summary:
       "Need a dumpster on the driveway by Friday? Order one in minutes on our transactional site, midwestwaste.app.",
     appCta: true,
+    image: "/images/photos/roll-off-driveway.webp",
   },
 ];
 
