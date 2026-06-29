@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /status
+Disallow: /photo-review
 
 Sitemap: https://www.midwestwasteconsultants.com/sitemap-index.xml

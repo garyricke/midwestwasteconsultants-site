@@ -1,0 +1,59 @@
+---
+// Full-screen password overlay for internal-only pages so they can't be opened
+// by direct URL. Shares the same sessionStorage key as AdminPanel, so unlocking
+// once via the badge means no re-prompt here. Client-side only — not real
+// security (the site already sits behind the Netlify edge gate).
+const BRAND_NAME = "Midwest Waste Consultants";
+const LOGO_SRC = "/images/logo-midewest-waste-redraw-no-text.svg";
+---
+
+<div id="pw-gate">
+  <div id="pw-box">
+    <img src={LOGO_SRC} alt={BRAND_NAME} onerror="this.style.display='none'" />
+    <h2>Internal Document</h2>
+    <p class="sub">This page is password protected.</p>
+    <input id="pw-input" type="password" placeholder="Enter password" autocomplete="current-password" />
+    <button id="pw-btn" type="button">Enter</button>
+    <p id="pw-error"></p>
+  </div>
+</div>
+
+<style>
+  #pw-gate { position: fixed; inset: 0; z-index: 9999; background: #142849; display: flex; align-items: center; justify-content: center; font-family: "Open Sans", system-ui, sans-serif; }
+  #pw-gate::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,130,0,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,130,0,.06) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  #pw-box { position: relative; background: rgba(255,255,255,.04); border: 1px solid color-mix(in srgb, #ff8200 25%, transparent); border-radius: 16px; padding: 48px 40px; text-align: center; width: min(400px, 90vw); box-shadow: 0 24px 80px rgba(0,0,0,.5); }
+  #pw-box img { height: 52px; margin-bottom: 24px; display: block; margin-inline: auto; }
+  #pw-box h2 { font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 1.6rem; color: #ff8200; letter-spacing: .01em; margin: 0 0 8px; }
+  #pw-box .sub { font-size: .85rem; color: rgba(232,238,246,.55); margin: 0 0 28px; letter-spacing: .02em; }
+  #pw-input { width: 100%; padding: 12px 16px; background: rgba(0,0,0,.3); border: 1px solid color-mix(in srgb, #ff8200 30%, transparent); border-radius: 8px; color: #fff; font-size: .95rem; font-family: inherit; outline: none; transition: border-color .2s; }
+  #pw-input:focus { border-color: #ff8200; }
+  #pw-btn { margin-top: 14px; width: 100%; padding: 12px; background: #ff8200; color: #142849; border: 0; border-radius: 8px; font-family: "Montserrat", sans-serif; font-weight: 800; font-size: .95rem; letter-spacing: .04em; cursor: pointer; transition: background .2s; }
+  #pw-btn:hover { background: #ffa033; }
+  #pw-error { font-size: .8rem; color: #ff9a9a; margin: 12px 0 0; min-height: 1.2em; }
+  .pw-shake { animation: pwShake .35s; }
+  @keyframes pwShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+</style>
+
+<script>
+  (function () {
+    var KEY = "mwc_admin", PASS = "ilovegarbage", gate = document.getElementById("pw-gate");
+    if (!gate) return;
+    try { if (sessionStorage.getItem(KEY) === "1") { gate.style.display = "none"; return; } } catch (e) {}
+    document.body.style.overflow = "hidden";
+    function attempt() {
+      var input = document.getElementById("pw-input");
+      if (input.value === PASS) {
+        try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+        document.body.style.overflow = "";
+        gate.style.display = "none";
+      } else {
+        document.getElementById("pw-error").textContent = "Incorrect password. Try again.";
+        var box = document.getElementById("pw-box");
+        box.classList.remove("pw-shake"); void box.offsetWidth; box.classList.add("pw-shake");
+      }
+    }
+    document.getElementById("pw-btn").addEventListener("click", attempt);
+    document.getElementById("pw-input").addEventListener("keydown", function (e) { if (e.key === "Enter") attempt(); });
+    document.getElementById("pw-input").focus();
+  })();
+</script>

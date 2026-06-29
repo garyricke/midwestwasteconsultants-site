@@ -1,0 +1,220 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageGate from "../components/PageGate.astro";
+
+// Internal photo-review board. Gated by PageGate + the site-wide edge gate and
+// noindex'd so it never lands in search or the sitemap. Tyler reviews each
+// source photo alongside two AI cleanups (Gemini + OpenAI) and leaves a short
+// description; submissions are captured via Netlify Forms.
+const updated = "June 26, 2026";
+
+type Photo = {
+  slug: string;
+  title: string;
+  note: string;
+  flag?: string;
+};
+
+const photos: Photo[] = [
+  { slug: "roll-off-driveway", title: "Roll-off in a residential driveway", note: "Black roll-off staged on a clean suburban driveway — strong hero candidate." },
+  { slug: "truck-logo", title: "Branded rear-load truck", note: "Collection truck wearing the polar-bear logo, with Greg & Tyler on site." },
+  { slug: "branded-frontloads", title: "Branded front-load dumpsters", note: "Two front-loads carrying the Midwest Waste bear-logo decals." },
+  { slug: "forklift-1", title: "Red forklift on the trailer", note: "Heavy forklift loaded for transport at the yard." },
+  { slug: "forklift-2", title: "Yellow Hyster forklift", note: "Hyster forklift loaded on a lowboy trailer." },
+  { slug: "loader", title: "Wheel loader on the lowboy", note: "CAT wheel loader staged for transport." },
+  { slug: "tinley-nonhaz-1", title: "Non-haz staging — Tinley Park", note: "Collected paint, PVC and tubes staged at the dock door." },
+  { slug: "tinley-nonhaz-2", title: "Non-haz — fluorescent tubes", note: "Bundled fluorescent tubes alongside stacked buckets." },
+  { slug: "tinley-nonhaz-3", title: "Non-haz — paint buckets", note: "Five-gallon buckets staged for non-hazardous disposal." },
+  { slug: "plano-asphalt", title: "Apartment cleanout — Plano", note: "Three front-loads handling a move-out cleanout." },
+  { slug: "roll-off-containers", title: "Roll-offs at a cleanout site", note: "Green and red roll-offs at a commercial cleanout, dusk." },
+  { slug: "groot-1", title: "Overflowing enclosure", note: "Could work as deliberate 'the problem' imagery.", flag: "Shows a competitor's branded bin — review before any public use." },
+  { slug: "groot-2", title: "Messy enclosure", note: "Competitor enclosure with scattered overflow.", flag: "Shows competitor branding — review before any public use." },
+  { slug: "wm-overloaded", title: "Overloaded dumpster", note: "Overloaded container at a residential property.", flag: "Competitor container — review before any public use." },
+  { slug: "coastal-doral", title: "Blue recycle / trash roll-offs", note: "Row of recycle/trash roll-offs.", flag: "Out-of-market with another company's name on the bins — review before use." },
+];
+
+const versions = [
+  { key: "original", label: "Original", sub: "As sent" },
+  { key: "gemini", label: "Gemini cleanup", sub: "Nano Banana Pro" },
+  { key: "openai", label: "OpenAI cleanup", sub: "gpt-image" },
+];
+
+const GARY_EMAIL = "gary.ricke@orbisdesign.com";
+---
+
+<Layout title="Photo Review" description="Internal photo review board." noindex={true}>
+  <PageGate />
+
+  <section class="border-b border-rule bg-navy">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <span class="eyebrow text-orange">Internal · Photo Review</span>
+      <h1 class="mt-3 text-4xl font-extrabold text-white sm:text-5xl">Photo Review — Tranche 1</h1>
+      <p class="mt-4 max-w-2xl text-white/70">
+        Hi Tyler — here are the photos you sent, each shown three ways: your
+        <strong class="text-white">original</strong> next to two AI-cleaned versions
+        (one from Google's Gemini, one from OpenAI) that aim to make them look
+        professionally shot. For each one, drop a quick description below — what it
+        is, and anything that should be removed or blurred (plates, faces, addresses,
+        other companies' logos). If one of the cleaned versions looks best, tap it.
+        Tap any image to see it full-size. We know Greg's phone photos are coming next.
+      </p>
+      <p class="mt-4 font-display text-xs uppercase tracking-[0.16em] text-white/50">
+        {photos.length} photos · Last updated {updated}
+      </p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <!-- Netlify needs a name + the form-name hidden field; honeypot guards spam. -->
+    <form
+      name="photo-descriptions"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      id="photo-form"
+    >
+      <input type="hidden" name="form-name" value="photo-descriptions" />
+      <p class="hidden">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div class="mb-10 rounded-2xl border border-rule bg-steel p-6">
+        <label for="tyler-name" class="block font-display text-sm font-bold text-navy">Your name</label>
+        <input
+          id="tyler-name"
+          name="tyler-name"
+          type="text"
+          placeholder="Tyler"
+          class="mt-2 w-full max-w-xs rounded-lg border border-rule bg-white px-4 py-2.5 text-ink outline-none focus:border-orange"
+        />
+      </div>
+
+      <div class="space-y-12">
+        {photos.map((photo, i) => (
+          <article class="rounded-2xl border border-rule bg-white p-5 shadow-sm sm:p-7">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 class="font-display text-xl font-extrabold text-navy">
+                <span class="text-muted">{String(i + 1).padStart(2, "0")}.</span> {photo.title}
+              </h2>
+              <span class="font-mono text-xs text-muted">{photo.slug}</span>
+            </div>
+            <p class="mt-1 text-sm text-muted">{photo.note}</p>
+            {photo.flag && (
+              <p class="mt-2 inline-flex items-start gap-2 rounded-lg bg-orange/10 px-3 py-2 text-xs font-semibold text-orange">
+                <svg class="mt-px h-4 w-4 flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+                <span>{photo.flag}</span>
+              </p>
+            )}
+
+            <div class="mt-5 grid gap-4 sm:grid-cols-3">
+              {versions.map((v) => (
+                <label class="group cursor-pointer">
+                  <a
+                    href={`/images/photo-review/${photo.slug}-${v.key}.webp`}
+                    target="_blank"
+                    rel="noopener"
+                    class="block overflow-hidden rounded-xl border border-rule bg-steel"
+                    onclick="event.stopPropagation()"
+                  >
+                    <img
+                      src={`/images/photo-review/${photo.slug}-${v.key}.webp`}
+                      alt={`${photo.title} — ${v.label}`}
+                      loading="lazy"
+                      class="aspect-[4/3] w-full object-cover transition group-hover:opacity-90"
+                    />
+                  </a>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name={`pref-${photo.slug}`}
+                      value={v.key}
+                      class="h-4 w-4 accent-orange"
+                    />
+                    <span class="font-display text-xs font-bold uppercase tracking-wide text-navy">{v.label}</span>
+                    <span class="text-[0.7rem] text-muted">{v.sub}</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            <label class="mt-5 block font-display text-sm font-bold text-navy" for={`desc-${photo.slug}`}>
+              Description &amp; notes
+            </label>
+            <textarea
+              id={`desc-${photo.slug}`}
+              name={`desc-${photo.slug}`}
+              rows="2"
+              placeholder="What is this? Anything to remove/blur (plates, faces, addresses, other logos)?"
+              class="mt-2 w-full rounded-lg border border-rule bg-white px-4 py-3 text-ink outline-none focus:border-orange"
+            ></textarea>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-12 flex flex-col items-start gap-4 rounded-2xl border border-rule bg-navy p-7">
+        <p class="text-white/80">
+          Done? Hit send and it comes straight to Orbis. You can come back and add
+          more anytime — Greg's photos will get the same treatment.
+        </p>
+        <button
+          type="submit"
+          id="photo-submit"
+          class="rounded-full bg-orange px-7 py-3 font-display text-sm font-bold uppercase tracking-wide text-navy transition hover:bg-orange/80"
+        >
+          Send my notes
+        </button>
+        <p id="photo-status" class="text-sm text-white/70" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+
+  <script define:vars={{ garyEmail: GARY_EMAIL }}>
+    const form = document.getElementById("photo-form");
+    const status = document.getElementById("photo-status");
+    const btn = document.getElementById("photo-submit");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      status.textContent = "Sending…";
+      const data = new FormData(form);
+      try {
+        const res = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(data).toString(),
+        });
+        if (!res.ok) throw new Error("bad status " + res.status);
+        form.querySelectorAll("article, .mb-10").forEach((el) => el.remove());
+        status.innerHTML =
+          "<strong style='color:#fff'>Got it — thank you!</strong><br>Your notes are with Orbis. Close the tab whenever you're ready.";
+        btn.remove();
+      } catch (err) {
+        // Fallback so notes are never lost if the form endpoint hiccups.
+        btn.disabled = false;
+        const lines = [];
+        const nameField = form.querySelector("[name='tyler-name']");
+        if (nameField && nameField.value) lines.push("From: " + nameField.value + "\n");
+        form.querySelectorAll("textarea").forEach((t) => {
+          const slug = t.name.replace(/^desc-/, "");
+          const pref = form.querySelector(`[name='pref-${slug}']:checked`);
+          if (t.value || pref) {
+            lines.push(
+              slug +
+                (pref ? " [prefers: " + pref.value + "]" : "") +
+                ": " +
+                (t.value || "(no description)")
+            );
+          }
+        });
+        const body = encodeURIComponent(lines.join("\n"));
+        status.innerHTML =
+          "Couldn't reach the form just now. <a style='color:#ffa033;text-decoration:underline' href='mailto:" +
+          garyEmail +
+          "?subject=Photo%20review%20notes&body=" +
+          body +
+          "'>Tap here to email your notes instead.</a>";
+      }
+    });
+  </script>
+</Layout>

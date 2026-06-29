@@ -13,6 +13,9 @@ npm-debug.log*
 .env
 .env.production
 
+# internal planning docs (client emails, meeting notes, whois) — keep local
+plan/
+
 # macOS
 .DS_Store
 

@@ -1,0 +1,266 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageGate from "../components/PageGate.astro";
+
+// Internal project status. Gated by PageGate + the admin panel; noindex so it
+// never lands in search or the sitemap.
+const updated = "June 28, 2026";
+
+const pricing = [
+  { size: "30 yard", price: "$585", inc: "3 tons" },
+  { size: "20 yard", price: "$500", inc: "3 tons" },
+  { size: "15 yard", price: "$465", inc: "2 tons" },
+  { size: "10 yard", price: "$435", inc: "1 ton" },
+];
+
+const mwcTodo = [
+  { text: "Send the photo dump — first batch in; Greg's phone photos still to come.", done: "June 24" },
+  { text: "Get into the domain registrar and invite Gary as admin so the consulting site can go live.", done: "June 24" },
+  { text: "Set up the Stripe account; Orbis will then send dev-access instructions to wire in the keys." },
+  { text: "Confirm the pricing below and fill out the zip-code / transport sheet (Craig's Rockford range)." },
+  { text: "Sign off on policies (trip charge, cancellation, prohibited items) and loop in Joe for the T&Cs." },
+];
+
+const orbisTodo = [
+  "Pull the full 70-review Google feed into a testimonial system; reconcile the two Google pages.",
+  "Final visual polish on the consulting site once photos arrive.",
+  "Build the ordering flow: calendar date pickers, 48-hr minimum, Mon–Fri delivery, driveway placement, add-ons.",
+  "Research the full (state-by-state) prohibited-materials list and design a foolproof ordering interface.",
+  "Build the hauler admin tool (zip-code coverage) + a copy-paste hauler-recruitment email template.",
+  "Draft terms & conditions language and fraud safeguards (ID/photo upload, name match).",
+];
+---
+
+<Layout title="Project Status" description="Internal project status." noindex={true}>
+  <PageGate />
+
+  <section class="border-b border-rule bg-navy">
+    <div class="mx-auto max-w-4xl px-6 py-14">
+      <span class="eyebrow text-orange">Internal · Confidential</span>
+      <h1 class="mt-3 text-4xl font-extrabold text-white sm:text-5xl">Project Status</h1>
+      <p class="mt-3 max-w-2xl text-white/70">
+        Working record for the Midwest Waste Consultants build — the consulting
+        site and the transactional ordering system. Captures the June 9 strategy
+        meeting and the running follow-up log.
+      </p>
+      <p class="mt-4 font-display text-xs uppercase tracking-[0.16em] text-white/50">
+        Last updated {updated}
+      </p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-4xl px-6 py-14">
+
+    <!-- Workstream status cards -->
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="rounded-2xl border border-rule bg-white p-6 shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="font-display text-lg font-extrabold text-navy">Consulting Site</h2>
+          <span class="rounded-full bg-orange/15 px-3 py-1 font-display text-[0.7rem] font-bold uppercase tracking-wide text-orange">Launching next week</span>
+        </div>
+        <p class="mt-3 text-sm text-muted">
+          Rebuilt and rebranded; messaging cleaned up. Preview live at
+          <a href="https://midwestwasteconsultants-site.netlify.app/" class="font-semibold text-navy underline" target="_blank" rel="noopener">midwestwasteconsultants-site.netlify.app</a>
+          (password <code class="rounded bg-steel px-1.5 py-0.5 text-xs">ilovegarbage</code>).
+          Domain access granted (June 24); first photo batch in and on the review
+          board for Tyler's sign-off. Then final polish and cancel Pablo.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-rule bg-white p-6 shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="font-display text-lg font-extrabold text-navy">Ordering Site</h2>
+          <span class="rounded-full bg-navy/10 px-3 py-1 font-display text-[0.7rem] font-bold uppercase tracking-wide text-navy">In design</span>
+        </div>
+        <p class="mt-3 text-sm text-muted">
+          Transactional dumpster ordering (<a href="https://midwestwaste.app" class="font-semibold text-navy underline" target="_blank" rel="noopener">midwestwaste.app</a>).
+          Piloting Illinois-only, MWC taking its own orders first. Blocked on:
+          Stripe account + confirmed pricing/zip sheet.
+        </p>
+      </div>
+    </div>
+
+    <!-- June 9 meeting record -->
+    <section class="mt-14">
+      <span class="eyebrow">Meeting record</span>
+      <h2 class="mt-2 text-3xl font-extrabold text-navy">June 9, 2026 — Strategy Session</h2>
+      <p class="mt-2 text-muted">Everything we decided, captured so nothing slips. Two tracks.</p>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Consulting site</h3>
+      <ul class="prose-mwc mt-3 text-ink">
+        <li>Scraped the old site and rebuilt it cleaner and rebranded; old site had fake testimonials to remove.</li>
+        <li>Pull the real reviews from the 70-review Google page (not the 5-review duplicate) into a testimonial system; reconcile the two Google profiles.</li>
+        <li>Need real photos and logos — Orbis will clean up whatever quality is provided. Optionally capture drone/site footage later.</li>
+        <li>Domain owned via registrar (GoDaddy / Network Solutions / Google) — Tyler to confirm login and invite Gary as admin.</li>
+        <li>Target: consulting site live next week, then call Pablo to cancel.</li>
+      </ul>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Ordering system — how orders flow</h3>
+      <ul class="prose-mwc mt-3 text-ink">
+        <li>Customer enters address + zip → system matches a hauler whose coverage area includes them, emails that hauler and copies MWC.</li>
+        <li>No hauler in range → customer sees a "we're finding a hauler for you" message; it routes to MWC.</li>
+        <li>Admin tool to add haulers and assign zip-code coverage ranges.</li>
+        <li>Pilot Illinois-only, with MWC taking its own orders first (crawl before run) before recruiting outside haulers.</li>
+      </ul>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Pricing (Rockford + blanket Northern IL)</h3>
+      <div class="mt-3 overflow-hidden rounded-xl border border-rule">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-navy text-white">
+            <tr>
+              <th class="px-4 py-2.5 font-display font-bold">Size</th>
+              <th class="px-4 py-2.5 font-display font-bold">Price</th>
+              <th class="px-4 py-2.5 font-display font-bold">Included</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pricing.map((row, i) => (
+              <tr class={i % 2 ? "bg-steel" : "bg-white"}>
+                <td class="px-4 py-2.5 font-semibold text-navy">{row.size}</td>
+                <td class="px-4 py-2.5 text-ink">{row.price}</td>
+                <td class="px-4 py-2.5 text-ink">{row.inc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-sm text-muted">Overage on all sizes: <strong class="text-ink">5¢/lb</strong>. Still need Craig's Rockford delivery/transport range (zip-code sheet).</p>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Ordering experience — decisions</h3>
+      <ul class="prose-mwc mt-3 text-ink">
+        <li><strong>Calendar date pickers</strong> for delivery and pickup (not a 1/2/3-week dropdown) — surfaces the longer rental window, a key differentiator.</li>
+        <li><strong>48-hour minimum</strong> notice on delivery; <strong>delivery Monday–Friday only.</strong></li>
+        <li><strong>Driveway placement</strong> (left/right facing the house) + reminder to keep cars off the driveway.</li>
+        <li><strong>Wood / driveway protection</strong> add-on (~$50).</li>
+        <li><strong>Tires &amp; mattresses</strong> declared up front with a per-item charge (no surprise back-charge).</li>
+      </ul>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Prohibited materials</h3>
+      <p class="prose-mwc mt-3 text-ink">No dirt; no concrete/brick (route to a special arrangement or 10-yard); no paint, oil, solvents, household hazardous, batteries, or electronics/TVs. Rules are state-by-state — Orbis to assemble the full list and design the interface to make it foolproof and friendly so customers understand before ordering.</p>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Money mechanics &amp; policies <span class="text-sm font-normal text-muted">(need sign-off + Joe's legal review)</span></h3>
+      <ul class="prose-mwc mt-3 text-ink">
+        <li><strong>Cancellation:</strong> free up to the day before. No rescheduling — cancel and place a new order.</li>
+        <li><strong>Trip charge:</strong> ~$250 if we arrive and can't deliver (e.g. cars in the driveway). Keep the order at the same charge, or cancel and refund the other half.</li>
+        <li><strong>Overweight loads</strong> billed on the back end through Stripe.</li>
+        <li><strong>Terms &amp; conditions checkbox</strong> covering driveway damage, weight limits, prohibited materials.</li>
+        <li>Connect Stripe to QuickBooks for bookkeeping; keep back-end manual billing ability for overages.</li>
+      </ul>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Fraud protection</h3>
+      <p class="prose-mwc mt-3 text-ink">Most traffic is mobile and stolen-card scammers have been a problem. Build safeguards — likely ID/photo upload at checkout and name-matching — so the page can't be used to order across the country on a stolen card.</p>
+
+      <h3 class="mt-8 font-display text-lg font-extrabold text-navy">Recruiting haulers</h3>
+      <p class="prose-mwc mt-3 text-ink">Admin tool to add a hauler + assign zip-code coverage, plus a copy-paste outreach email (starting with Liv Michigan in the Detroit suburbs) to collect rates, zip codes, accepted materials, and rental terms.</p>
+    </section>
+
+    <!-- Follow-up log -->
+    <section class="mt-14">
+      <span class="eyebrow">Follow-up log</span>
+      <h2 class="mt-2 text-3xl font-extrabold text-navy">Recent activity</h2>
+
+      <ol class="mt-6 space-y-6 border-l-2 border-rule pl-6">
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-orange"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-orange">June 28, 2026 — Today</p>
+          <p class="mt-1 font-semibold text-navy">Real photos wired into the consulting site.</p>
+          <p class="mt-1 text-sm text-muted">
+            The OpenAI-cleaned versions are now live across the site so we can see it
+            near launch-ready: the homepage hero and credibility block, the
+            <a href="/gallery" class="font-semibold text-navy underline">gallery</a>,
+            the About page, and all six service pages now use real trucks, branded
+            containers, and job-site photos in place of the stock placeholders.
+            Easy to swap any single image once Tyler weighs in on the review board.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 26, 2026</p>
+          <p class="mt-1 font-semibold text-navy">First photo batch received — review board live.</p>
+          <p class="mt-1 text-sm text-muted">
+            Tyler sent the first tranche of consulting-company photos (trucks, branded
+            dumpsters, equipment, job sites, logo art). Each usable shot was cleaned up
+            two ways — a Gemini and an OpenAI professional rework — and posted to an
+            internal <a href="/photo-review" class="font-semibold text-navy underline">Photo Review</a>
+            board where Tyler can compare versions and add a description for each.
+            Greg's phone photos are the next batch.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 24, 2026</p>
+          <p class="mt-1 font-semibold text-navy">GoDaddy domain access granted.</p>
+          <p class="mt-1 text-sm text-muted">
+            Gary now has admin access to the domain registrar (GoDaddy) — clears one
+            of the two blockers on launching the consulting site. Remaining blocker is
+            the photo dump from Tyler. Once that lands, point the domain and go live,
+            then cancel Pablo.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 19, 2026</p>
+          <p class="mt-1 font-semibold text-navy">Detailed follow-up email sent to Tyler.</p>
+          <p class="mt-1 text-sm text-muted">
+            Comprehensive recap of both tracks from the June 9 meeting: consulting-site
+            launch needs, full ordering-system spec (pricing, ordering UX, policies,
+            prohibited materials, fraud, hauler recruitment), and a clear to-do checklist.
+            Included the work-in-progress consulting-site link with the access phrase.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 18, 2026 — Yesterday</p>
+          <p class="mt-1 font-semibold text-navy">Replied to Tyler's "what do you need from me?"</p>
+          <p class="mt-1 text-sm text-muted">
+            Asked for the photo dump (will improve them regardless of quality to fill the
+            consulting site with real photos); flagged the goal of getting the
+            non-transactional site live next week, then shifting focus to the transactional
+            build. Asked Tyler to set up a Stripe account (Gary to send instructions to be
+            added as a developer). Said he'd review last week's discussion and circle back
+            with the other next steps Monday — this status page and the follow-up email are
+            that circle-back.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-rule"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 9, 2026</p>
+          <p class="mt-1 font-semibold text-navy">Strategy session (recorded above).</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Open items -->
+    <section class="mt-14 grid gap-5 sm:grid-cols-2">
+      <div class="rounded-2xl border border-rule bg-steel p-6">
+        <h2 class="font-display text-lg font-extrabold text-navy">MWC / Tyler — to do</h2>
+        <ul class="mt-4 space-y-3">
+          {mwcTodo.map((item) => (
+            <li class={`flex gap-3 text-sm ${item.done ? "text-muted" : "text-ink"}`}>
+              {item.done ? (
+                <svg class="mt-0.5 h-4 w-4 flex-none text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></svg>
+              ) : (
+                <svg class="mt-0.5 h-4 w-4 flex-none text-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+              )}
+              <span>
+                <span class={item.done ? "line-through" : ""}>{item.text}</span>
+                {item.done && <span class="ml-1.5 font-display text-[0.7rem] font-bold uppercase tracking-wide text-green-700 no-underline">✓ Done {item.done}</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-rule bg-steel p-6">
+        <h2 class="font-display text-lg font-extrabold text-navy">Orbis / Gary — to do</h2>
+        <ul class="mt-4 space-y-3">
+          {orbisTodo.map((item) => (
+            <li class="flex gap-3 text-sm text-ink">
+              <svg class="mt-0.5 h-4 w-4 flex-none text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</Layout>
