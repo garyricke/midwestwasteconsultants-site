@@ -4,7 +4,7 @@ import PageGate from "../components/PageGate.astro";
 
 // Internal project status. Gated by PageGate + the admin panel; noindex so it
 // never lands in search or the sitemap.
-const updated = "June 28, 2026";
+const updated = "June 29, 2026";
 
 const pricing = [
   { size: "30 yard", price: "$585", inc: "3 tons" },
@@ -22,7 +22,7 @@ const mwcTodo = [
 ];
 
 const orbisTodo = [
-  "Pull the full 70-review Google feed into a testimonial system; reconcile the two Google pages.",
+  "Reconcile the two Google profiles — the full 64-review feed is now imported into the site's testimonial system.",
   "Final visual polish on the consulting site once photos arrive.",
   "Build the ordering flow: calendar date pickers, 48-hr minimum, Mon–Fri delivery, driveway placement, add-ons.",
   "Research the full (state-by-state) prohibited-materials list and design a foolproof ordering interface.",
@@ -161,7 +161,20 @@ const orbisTodo = [
       <ol class="mt-6 space-y-6 border-l-2 border-rule pl-6">
         <li class="relative">
           <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-orange"></span>
-          <p class="font-display text-xs font-bold uppercase tracking-wide text-orange">June 28, 2026 — Today</p>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-orange">June 29, 2026 — Today</p>
+          <p class="mt-1 font-semibold text-navy">Full Google review feed imported.</p>
+          <p class="mt-1 text-sm text-muted">
+            Pulled the complete Google feed — 64 reviews — into the site's testimonial
+            system. The <a href="/reviews" class="font-semibold text-navy underline">Reviews</a>
+            page now shows 53 written five-star reviews, and the site's rating now reads
+            the true Google average of <strong>4.8★ across 64 reviews</strong> (three
+            1-star ratings exist, including a misfiled inquiry) rather than the earlier
+            placeholder 5.0. Still to do: reconcile the two Google profiles.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 28, 2026</p>
           <p class="mt-1 font-semibold text-navy">Real photos wired into the consulting site.</p>
           <p class="mt-1 text-sm text-muted">
             The OpenAI-cleaned versions are now live across the site so we can see it
