@@ -2,9 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Stars from "../components/Stars.astro";
-import { SITE, SERVICES, REVIEW_STATS, REVIEWS } from "../config/site";
+import { SITE, SERVICES, REVIEW_STATS } from "../config/site";
 
-const featured = REVIEWS[0];
+// Hand-picked snippets from the Google reviews for the homepage carousel —
+// chosen for variety (residential, repeat, price vs. big haulers, commercial,
+// contractor, last-minute) and brevity. Full set lives on /reviews.
+const featuredReviews = [
+  { body: "We rented a 15-yard dumpster for a home clean-up and couldn't be happier. Communication with Greg was fantastic, drop-off and pick-up were timely, and the price can't be beat.", author: "Erin and Travis Brown" },
+  { body: "Since switching from the “big” waste hauler to Midwest for half the cost, we haven't noticed any disruption in service. Tyler and Greg are professional, with no heavy-handed sales pitch.", author: "Cindy Ybarra" },
+  { body: "By far the best garbage experience I've had. We needed a large dumpster for a basement and garage cleanout, and Greg and team delivered same day at a great rate.", author: "Rachel Hyde" },
+  { body: "I use Midwest Waste for my two business locations. Super responsive, very competitively priced — they beat my current supplier — and just great people to work with.", author: "Belinda Demski" },
+  { body: "We're a disaster-mitigation contractor and our needs fluctuate by project. The quick response and flexibility Midwest provides is truly best-in-class service.", author: "Walter Sutphin" },
+  { body: "Great experience, great company. The 30-day rental was a game changer. Highly recommended — Greg is the best!", author: "Genel Thompson" },
+  { body: "Midwest Waste Consultants are THE BEST. Professional, reliable, and quick to respond to any question. Greg and Tyler really put their hearts into this business.", author: "Cheryl Kessler" },
+  { body: "Excellent experience. We needed a dumpster last minute — called the day before and confirmed the morning it was needed. We got it in record time.", author: "Diana Chapa" },
+];
 
 const schema = [
   {
@@ -113,16 +125,42 @@ const schema = [
           }
         </ul>
       </div>
-      <div class="rounded-2xl border border-rule bg-steel p-8">
-        <p class="font-display text-xl font-bold leading-snug text-navy">
-          “{featured.body.slice(0, 220)}…”
-        </p>
-        <div class="mt-5 flex items-center gap-3">
-          <Stars rating={featured.rating} />
-          <span class="text-sm font-semibold text-navy">{featured.author}</span>
-          <span class="text-sm text-muted">· Google</span>
+      <div class="rounded-2xl border border-rule bg-steel p-8" data-review-carousel aria-roledescription="carousel" aria-label="Customer reviews">
+        <div class="grid">
+          {
+            featuredReviews.map((r, i) => (
+              <figure
+                class="col-start-1 row-start-1 transition-opacity duration-700 ease-out"
+                data-slide
+                style={i === 0 ? "opacity:1" : "opacity:0;pointer-events:none"}
+                aria-hidden={i === 0 ? "false" : "true"}
+              >
+                <blockquote class="font-display text-xl font-bold leading-snug text-navy">“{r.body}”</blockquote>
+                <figcaption class="mt-5 flex flex-wrap items-center gap-3">
+                  <Stars rating={5} />
+                  <span class="text-sm font-semibold text-navy">{r.author}</span>
+                  <span class="text-sm text-muted">· Google</span>
+                </figcaption>
+              </figure>
+            ))
+          }
         </div>
-        <a href="/reviews" class="mt-4 inline-block font-display text-sm font-bold text-orange hover:underline">Read all reviews →</a>
+        <div class="mt-6 flex items-center justify-between">
+          <div class="flex items-center gap-2" data-dots>
+            {
+              featuredReviews.map((_, i) => (
+                <button
+                  type="button"
+                  data-dot
+                  aria-label={`Show review ${i + 1}`}
+                  class="h-2 rounded-full transition-all duration-300"
+                  style={i === 0 ? "width:1.25rem;background:#FF8200" : "width:0.5rem;background:rgba(20,40,73,0.2)"}
+                ></button>
+              ))
+            }
+          </div>
+          <a href="/reviews" class="font-display text-sm font-bold text-orange hover:underline">Read all reviews →</a>
+        </div>
       </div>
     </div>
   </section>
@@ -205,4 +243,52 @@ const schema = [
   </section>
 
   <CtaBand />
+
+  <script>
+    // Auto-rotating review carousel: fades between slides, pauses on hover/focus,
+    // honors reduced-motion, and lets the dots jump directly to a review.
+    const carousel = document.querySelector("[data-review-carousel]");
+    if (carousel) {
+      const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
+      const dots = Array.from(carousel.querySelectorAll("[data-dot]"));
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let idx = 0;
+      let timer;
+
+      const show = (n) => {
+        idx = (n + slides.length) % slides.length;
+        slides.forEach((s, i) => {
+          const active = i === idx;
+          s.style.opacity = active ? "1" : "0";
+          s.style.pointerEvents = active ? "" : "none";
+          s.setAttribute("aria-hidden", active ? "false" : "true");
+        });
+        dots.forEach((d, i) => {
+          const active = i === idx;
+          d.style.width = active ? "1.25rem" : "0.5rem";
+          d.style.background = active ? "#FF8200" : "rgba(20,40,73,0.2)";
+        });
+      };
+
+      const start = () => {
+        stop();
+        if (!reduce && slides.length > 1) timer = window.setInterval(() => show(idx + 1), 6000);
+      };
+      const stop = () => timer && window.clearInterval(timer);
+
+      dots.forEach((d, i) =>
+        d.addEventListener("click", () => {
+          show(i);
+          start();
+        })
+      );
+      carousel.addEventListener("mouseenter", stop);
+      carousel.addEventListener("mouseleave", start);
+      carousel.addEventListener("focusin", stop);
+      carousel.addEventListener("focusout", start);
+
+      show(0);
+      start();
+    }
+  </script>
 </Layout>
