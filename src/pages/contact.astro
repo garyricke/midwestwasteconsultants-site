@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PageHero from "../components/PageHero.astro";
 import { SITE, SERVICES } from "../config/site";
 ---
 
@@ -8,11 +7,28 @@ import { SITE, SERVICES } from "../config/site";
   title="Contact & Free Quote"
   description="Get a free, no-obligation waste review. Call 630-800-8549 or request a quote online. Owner-operated, based in Sugar Grove & Aurora, IL."
 >
-  <PageHero
-    eyebrow="Contact"
-    title="Get a free quote — talk to an owner."
-    subtitle="Tell us what you're dealing with. We'll give you a straight answer and a real number, with no obligation."
-  />
+  <section class="relative isolate overflow-hidden bg-navy">
+    <img
+      src="/images/photos/contact-hero.webp"
+      alt="A Midwest Waste team member on the phone in the historic Challenge Windmill offices overlooking the Fox River"
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <span class="eyebrow border-l-2 border-orange pl-3">Contact</span>
+      <h1 class="mt-4 max-w-2xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        Get a free quote — talk to an owner.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80">
+        Tell us what you're dealing with. We'll give you a straight answer and a real number, with no obligation.
+      </p>
+    </div>
+  </section>
 
   <section class="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_1fr]">
     <!-- FORM -->

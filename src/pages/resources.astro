@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
 
 // Placeholder article topics — replace with real posts as the blog fills in.
@@ -16,11 +15,28 @@ const articles = [
   title="Resources & Podcast"
   description="Plain-spoken breakdowns of how the waste industry really works — contract traps, diversion wins, and stories from the route. Podcast coming soon."
 >
-  <PageHero
-    eyebrow="Resources & Podcast"
-    title="How the waste game really works."
-    subtitle="No jargon. Just what three decades in the field taught us — so you can spot the traps before they cost you."
-  />
+  <section class="relative isolate overflow-hidden bg-navy">
+    <img
+      src="/images/photos/resources-hero.webp"
+      alt="Midwest Waste owners recording a podcast in the cab of a garbage truck"
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <span class="eyebrow border-l-2 border-orange pl-3">Resources &amp; Podcast</span>
+      <h1 class="mt-4 max-w-2xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        How the waste game really works.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80">
+        No jargon. Just what three decades in the field taught us — so you can spot the traps before they cost you.
+      </p>
+    </div>
+  </section>
 
   <!-- PODCAST -->
   <section class="mx-auto max-w-6xl px-6 py-16">

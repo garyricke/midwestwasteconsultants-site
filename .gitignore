@@ -16,6 +16,10 @@ npm-debug.log*
 # internal planning docs (client emails, meeting notes, whois) — keep local
 plan/
 
+# AI image/video masters — only the optimized exports in public/ should ship
+generated_imgs/
+veo3_video_*.mp4
+
 # macOS
 .DS_Store
 

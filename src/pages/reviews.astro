@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Stars from "../components/Stars.astro";
 import { SITE, REVIEWS, REVIEW_STATS } from "../config/site";
@@ -32,7 +31,28 @@ const schema = [
   description="What our customers say about Midwest Waste Consultants — 4.8 stars across 64 Google reviews."
   schema={schema}
 >
-  <PageHero eyebrow="Reviews" title="What our customers have to say." />
+  <section class="relative isolate overflow-hidden bg-navy">
+    <img
+      src="/images/photos/reviews-hero.webp"
+      alt="A happy homeowner smiling in front of a Midwest Waste roll-off dumpster during a driveway cleanout"
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <span class="eyebrow border-l-2 border-orange pl-3">Reviews</span>
+      <h1 class="mt-4 max-w-2xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        What our customers have to say.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80">
+        {REVIEW_STATS.average.toFixed(1)} stars across {REVIEW_STATS.count} verified Google reviews — from homeowners and businesses across the Fox Valley.
+      </p>
+    </div>
+  </section>
 
   <section class="mx-auto max-w-6xl px-6 py-16">
     <div class="flex flex-col items-center gap-3 text-center">

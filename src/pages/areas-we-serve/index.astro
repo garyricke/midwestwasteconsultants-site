@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { SITE, SERVICE_AREAS } from "../../config/site";
 ---
@@ -9,11 +8,38 @@ import { SITE, SERVICE_AREAS } from "../../config/site";
   title="Areas We Serve"
   description="Midwest Waste Consultants serves the Illinois Fox Valley — Sugar Grove, Aurora, Naperville, Geneva, St. Charles, Batavia and surrounding communities — with consulting and brokering available nationwide."
 >
-  <PageHero
-    eyebrow="Areas We Serve"
-    title="Rooted in the Fox Valley. Working nationwide."
-    subtitle="Our trucks run the communities west of Chicago. Our consulting and brokering practice coordinates service across the country."
-  />
+  <section class="relative isolate overflow-hidden bg-navy">
+    <video
+      class="absolute inset-0 -z-10 h-full w-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/images/photos/areas-hero.webp"
+      aria-label="Aerial tilt-shift view of a Fox Valley river town with a Midwest Waste truck crossing the bridge"
+    >
+      <source src="/videos/areas-hero.mp4" type="video/mp4" />
+      <img
+        src="/images/photos/areas-hero.webp"
+        alt="Aerial tilt-shift view of a Fox Valley river town with a Midwest Waste truck crossing the bridge"
+        width="1600"
+        height="900"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    </video>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/75 to-navy-deep/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <span class="eyebrow border-l-2 border-orange pl-3">Areas We Serve</span>
+      <h1 class="mt-4 max-w-2xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        Rooted in the Fox Valley. Working nationwide.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80">
+        Our trucks run the communities west of Chicago. Our consulting and brokering practice coordinates service across the country.
+      </p>
+    </div>
+  </section>
 
   <section class="mx-auto max-w-6xl px-6 py-16">
     <h2 class="text-2xl font-extrabold text-navy">Illinois Fox Valley service area</h2>
@@ -22,12 +48,36 @@ import { SITE, SERVICE_AREAS } from "../../config/site";
       surrounding area. Don't see your town? <a href="/contact#quote" class="font-semibold text-orange">Ask us</a> — we likely cover it.
     </p>
 
-    <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         SERVICE_AREAS.map((a) => (
-          <a href={`/areas-we-serve/${a.slug}`} class="group flex items-center justify-between rounded-xl border border-rule bg-white px-4 py-3.5 transition-all hover:border-orange hover:shadow">
-            <span class="font-display text-sm font-semibold text-navy group-hover:text-orange">{a.city}, {a.state}</span>
-            <svg class="h-4 w-4 text-muted group-hover:text-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          <a
+            href={`/areas-we-serve/${a.slug}`}
+            class="group relative block aspect-[16/9] overflow-hidden rounded-2xl border border-rule bg-navy shadow-sm transition-all hover:-translate-y-0.5 hover:border-orange hover:shadow-lg"
+          >
+            {a.hasImage ? (
+              <img
+                src={`/images/areas/${a.slug}-panel.webp`}
+                alt={`${a.city}, ${a.state} — Midwest Waste Consultants service area`}
+                width="800"
+                height="450"
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <div class="absolute inset-0 bg-gradient-to-br from-navy via-navy to-navy-deep" aria-hidden="true" />
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-deep/85 via-navy-deep/25 to-transparent" aria-hidden="true" />
+            <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-4">
+              <span class="font-display text-lg font-bold leading-tight text-white drop-shadow-sm">
+                {a.city}
+                <span class="block text-xs font-semibold uppercase tracking-wide text-white/65">{a.state}</span>
+              </span>
+              <span class="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors group-hover:bg-orange group-hover:text-navy-deep">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </div>
           </a>
         ))
       }

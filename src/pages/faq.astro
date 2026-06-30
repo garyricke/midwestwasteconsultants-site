@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
 import { FAQS } from "../config/site";
 
@@ -22,11 +21,28 @@ const schema = [
   description="Answers to common questions about waste consulting, brokering, nationwide coordination, and recycling programs."
   schema={schema}
 >
-  <PageHero
-    eyebrow="FAQ"
-    title="Frequently asked questions."
-    subtitle="Straight answers about how waste consulting and brokering actually work."
-  />
+  <section class="relative isolate overflow-hidden bg-navy">
+    <img
+      src="/images/photos/faq-hero.webp"
+      alt="Different categories of waste sorted into groups in front of a Midwest Waste roll-off dumpster"
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <span class="eyebrow border-l-2 border-orange pl-3">FAQ</span>
+      <h1 class="mt-4 max-w-2xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        Frequently asked questions.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80">
+        Straight answers about how waste consulting and brokering actually work.
+      </p>
+    </div>
+  </section>
 
   <section class="mx-auto max-w-3xl px-6 py-16">
     <div class="divide-y divide-rule rounded-2xl border border-rule bg-white">

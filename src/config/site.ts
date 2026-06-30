@@ -101,30 +101,36 @@ export type ServiceArea = {
   slug: string;
   city: string;
   state: "IL";
+  // When true, cinematic town imagery exists at
+  // /images/areas/<slug>-hero.webp and /images/areas/<slug>-panel.webp.
+  hasImage?: boolean;
 };
 
 // Fox Valley corridor, west of Chicago. Sourced from the live site.
+// NOTE: town images (hasImage) are AI-generated PLACEHOLDERS. Post-launch todo:
+// shoot a real phone photo on location in each town, composite the actual truck
+// in, grade it cinematic, and replace these one town at a time over time.
 export const SERVICE_AREAS: ServiceArea[] = [
-  { slug: "sugar-grove-il", city: "Sugar Grove", state: "IL" },
-  { slug: "aurora-il", city: "Aurora", state: "IL" },
-  { slug: "naperville-il", city: "Naperville", state: "IL" },
-  { slug: "geneva-il", city: "Geneva", state: "IL" },
-  { slug: "st-charles-il", city: "St. Charles", state: "IL" },
-  { slug: "batavia-il", city: "Batavia", state: "IL" },
-  { slug: "north-aurora-il", city: "North Aurora", state: "IL" },
-  { slug: "oswego-il", city: "Oswego", state: "IL" },
-  { slug: "elburn-il", city: "Elburn", state: "IL" },
-  { slug: "west-chicago-il", city: "West Chicago", state: "IL" },
-  { slug: "wheaton-il", city: "Wheaton", state: "IL" },
-  { slug: "yorkville-il", city: "Yorkville", state: "IL" },
-  { slug: "montgomery-il", city: "Montgomery", state: "IL" },
-  { slug: "plainfield-il", city: "Plainfield", state: "IL" },
-  { slug: "south-elgin-il", city: "South Elgin", state: "IL" },
-  { slug: "elgin-il", city: "Elgin", state: "IL" },
-  { slug: "winfield-il", city: "Winfield", state: "IL" },
-  { slug: "warrenville-il", city: "Warrenville", state: "IL" },
-  { slug: "glen-ellyn-il", city: "Glen Ellyn", state: "IL" },
-  { slug: "downers-grove-il", city: "Downers Grove", state: "IL" },
+  { slug: "sugar-grove-il", city: "Sugar Grove", state: "IL", hasImage: true },
+  { slug: "aurora-il", city: "Aurora", state: "IL", hasImage: true },
+  { slug: "naperville-il", city: "Naperville", state: "IL", hasImage: true },
+  { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true },
+  { slug: "st-charles-il", city: "St. Charles", state: "IL", hasImage: true },
+  { slug: "batavia-il", city: "Batavia", state: "IL", hasImage: true },
+  { slug: "north-aurora-il", city: "North Aurora", state: "IL", hasImage: true },
+  { slug: "oswego-il", city: "Oswego", state: "IL", hasImage: true },
+  { slug: "elburn-il", city: "Elburn", state: "IL", hasImage: true },
+  { slug: "west-chicago-il", city: "West Chicago", state: "IL", hasImage: true },
+  { slug: "wheaton-il", city: "Wheaton", state: "IL", hasImage: true },
+  { slug: "yorkville-il", city: "Yorkville", state: "IL", hasImage: true },
+  { slug: "montgomery-il", city: "Montgomery", state: "IL", hasImage: true },
+  { slug: "plainfield-il", city: "Plainfield", state: "IL", hasImage: true },
+  { slug: "south-elgin-il", city: "South Elgin", state: "IL", hasImage: true },
+  { slug: "elgin-il", city: "Elgin", state: "IL", hasImage: true },
+  { slug: "winfield-il", city: "Winfield", state: "IL", hasImage: true },
+  { slug: "warrenville-il", city: "Warrenville", state: "IL", hasImage: true },
+  { slug: "glen-ellyn-il", city: "Glen Ellyn", state: "IL", hasImage: true },
+  { slug: "downers-grove-il", city: "Downers Grove", state: "IL", hasImage: true },
 ];
 
 export type Review = {

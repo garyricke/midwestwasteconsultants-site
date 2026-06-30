@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { SITE, SERVICES } from "../../config/site";
 ---
@@ -9,11 +8,28 @@ import { SITE, SERVICES } from "../../config/site";
   title="Services"
   description="Waste consulting, brokering, sustainability, recycling, commercial disposal, event waste, and roll-off dumpsters — strategy and hands-on service from one owner-operated team."
 >
-  <PageHero
-    eyebrow="Services"
-    title="From the boardroom to the driveway."
-    subtitle="Strategy, brokering, and sustainability for the long game — and the hands-on hauling services that built our reputation."
-  />
+  <section class="relative isolate overflow-hidden bg-navy">
+    <img
+      src="/images/photos/services-hero.webp"
+      alt="Midwest Waste Consultants owners with a branded front-load collection truck"
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <span class="eyebrow border-l-2 border-orange pl-3">Services</span>
+      <h1 class="mt-4 max-w-2xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+        From the boardroom to the driveway.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80">
+        Strategy, brokering, and sustainability for the long game — and the hands-on hauling services that built our reputation.
+      </p>
+    </div>
+  </section>
 
   <section class="mx-auto max-w-6xl px-6 py-16">
     <div class="grid gap-6 md:grid-cols-2">

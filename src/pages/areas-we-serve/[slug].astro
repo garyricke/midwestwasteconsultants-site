@@ -37,8 +37,23 @@ const schema = [
   description={`Reliable waste management, roll-off dumpsters, recycling, and waste consulting for ${city}, ${area.state}. Owner-operated, 30+ years, free estimates. Call ${SITE.phone}.`}
   schema={schema}
 >
-  <section class="bg-navy">
-    <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+  <section class="relative isolate overflow-hidden bg-navy">
+    {area.hasImage && (
+      <>
+        <img
+          src={`/images/areas/${area.slug}-hero.webp`}
+          alt={`${city}, ${area.state} — roll-off dumpster service from Midwest Waste Consultants`}
+          width="1600"
+          height="900"
+          fetchpriority="high"
+          decoding="async"
+          class="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/40" aria-hidden="true" />
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true" />
+      </>
+    )}
+    <div class="mx-auto max-w-6xl px-6 py-16 sm:py-24">
       <nav class="mb-5 text-sm text-white/55" aria-label="Breadcrumb">
         <a href="/areas-we-serve" class="hover:text-orange">Areas We Serve</a>
         <span class="px-1.5">/</span>
