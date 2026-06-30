@@ -8,14 +8,14 @@ import { SITE, SERVICES, REVIEW_STATS } from "../config/site";
 // they can be set large, each paired with a contextual cinematic background.
 // Full set lives on /reviews.
 const featuredReviews = [
-  { body: "Couldn't be happier. Communication with Greg was fantastic, pick-up was timely, and the price can't be beat.", author: "Erin and Travis Brown", bg: "/images/reviews/home-driveway.webp" },
-  { body: "Switched from the big hauler to Midwest for half the cost — and zero drop in service.", author: "Cindy Ybarra", bg: "/images/reviews/dumpster-row.webp" },
-  { body: "By far the best garbage experience I've had — delivered same day, at a great rate.", author: "Rachel Hyde", bg: "/images/reviews/garage-dusk.webp" },
-  { body: "I use them for both my business locations. Super responsive, and they beat my supplier's price.", author: "Belinda Demski", bg: "/images/reviews/commercial-alley.webp" },
-  { body: "We're a disaster-mitigation contractor — their response and flexibility is best-in-class.", author: "Walter Sutphin", bg: "/images/reviews/debris-jobsite.webp" },
-  { body: "The 30-day rental was a game changer. Highly recommended — Greg is the best!", author: "Genel Thompson", bg: "/images/reviews/lone-sunset.webp" },
-  { body: "Simply THE BEST. Greg and Tyler really put their hearts into this business.", author: "Cheryl Kessler", bg: "/images/reviews/truck-sunrise.webp" },
-  { body: "Needed a dumpster last minute — called the day before, had it in record time.", author: "Diana Chapa", bg: "/images/reviews/delivery-dawn.webp" },
+  { body: "Couldn't be happier. Communication with Greg was fantastic, pick-up was timely, and the price can't be beat.", author: "Erin and Travis Brown", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/home-driveway" },
+  { body: "Switched from the big hauler to Midwest for half the cost — and zero drop in service.", author: "Cindy Ybarra", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/dumpster-row" },
+  { body: "By far the best garbage experience I've had — delivered same day, at a great rate.", author: "Rachel Hyde", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/garage-dusk" },
+  { body: "I use them for both my business locations. Super responsive, and they beat my supplier's price.", author: "Belinda Demski", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/commercial-alley" },
+  { body: "We're a disaster-mitigation contractor — their response and flexibility is best-in-class.", author: "Walter Sutphin", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/debris-jobsite" },
+  { body: "The 30-day rental was a game changer. Highly recommended — Greg is the best!", author: "Genel Thompson", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/lone-sunset" },
+  { body: "Simply THE BEST. Greg and Tyler really put their hearts into this business.", author: "Cheryl Kessler", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/truck-sunrise" },
+  { body: "Needed a dumpster last minute — called the day before, had it in record time.", author: "Diana Chapa", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/delivery-dawn" },
 ];
 
 const schema = [
@@ -48,7 +48,7 @@ const schema = [
   <!-- HERO -->
   <section class="relative overflow-hidden bg-navy">
     <div class="absolute inset-0">
-      <img src="/images/photos/truck-logo.webp" alt="" class="h-full w-full object-cover opacity-80" />
+      <img src="https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/truck-logo" alt="" class="h-full w-full object-cover opacity-80" />
       <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/35"></div>
     </div>
     <div class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
@@ -126,7 +126,7 @@ const schema = [
         </ul>
       </div>
       <div class="overflow-hidden rounded-2xl border border-rule shadow-lg">
-        <img src="/images/photos/roll-off-driveway.webp" alt="A Midwest Waste roll-off dumpster placed on a residential driveway" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+        <img src="https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/roll-off-driveway" alt="A Midwest Waste roll-off dumpster placed on a residential driveway" class="aspect-[4/3] w-full object-cover" loading="lazy" />
       </div>
     </div>
   </section>
@@ -261,7 +261,7 @@ const schema = [
         <a href="/services/event-waste-management" class="mt-6 inline-block font-display font-bold text-orange hover:underline">See event services →</a>
       </div>
       <div class="overflow-hidden rounded-2xl border border-white/10">
-        <img src="/images/photos/liv-golf.webp" alt="Championship golf tournament — waste and recycling managed on site" class="h-full w-full object-cover" loading="lazy" />
+        <img src="https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/liv-golf" alt="Championship golf tournament — waste and recycling managed on site" class="h-full w-full object-cover" loading="lazy" />
       </div>
     </div>
   </section>

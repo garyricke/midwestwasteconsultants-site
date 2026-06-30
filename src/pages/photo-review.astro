@@ -110,14 +110,14 @@ const GARY_EMAIL = "gary.ricke@orbisdesign.com";
               {versions.map((v) => (
                 <label class="group cursor-pointer">
                   <a
-                    href={`/images/photo-review/${photo.slug}-${v.key}.webp`}
+                    href={`https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photo-review/${photo.slug}-${v.key}`}
                     target="_blank"
                     rel="noopener"
                     class="block overflow-hidden rounded-xl border border-rule bg-steel"
                     onclick="event.stopPropagation()"
                   >
                     <img
-                      src={`/images/photo-review/${photo.slug}-${v.key}.webp`}
+                      src={`https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photo-review/${photo.slug}-${v.key}`}
                       alt={`${photo.title} — ${v.label}`}
                       loading="lazy"
                       class="aspect-[4/3] w-full object-cover transition group-hover:opacity-90"

@@ -56,21 +56,21 @@ export const SERVICES: Service[] = [
     title: "Brokering & Consulting",
     summary:
       "We sit on your side of the table — auditing contracts, exposing auto-renewal traps, and leveraging a nationwide vendor network to cut your waste spend.",
-    image: "/images/photos/truck-logo.webp",
+    image: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/truck-logo",
   },
   {
     slug: "sustainability-programs",
     title: "Sustainability Programs",
     summary:
       "Practical diversion strategies and reporting that move you toward real sustainability goals — not buzzwords.",
-    image: "/images/photos/tinley-nonhaz-2.webp",
+    image: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/tinley-nonhaz-2",
   },
   {
     slug: "recycling-waste-management",
     title: "Recycling & Waste Diversion",
     summary:
       "Material identification, right-sized sorting systems, and landfill diversion that lowers cost while improving outcomes.",
-    image: "/images/photos/tinley-nonhaz-1.webp",
+    image: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/tinley-nonhaz-1",
   },
   {
     slug: "commercial-waste-disposal",
@@ -78,14 +78,14 @@ export const SERVICES: Service[] = [
     summary:
       "Optimized collection schedules and compliance for businesses with one location or five hundred.",
     appCta: true,
-    image: "/images/photos/branded-frontloads.webp",
+    image: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/branded-frontloads",
   },
   {
     slug: "event-waste-management",
     title: "Event Waste Management",
     summary:
       "Container planning, recycling integration, and cleanup for events of any scale — we've managed waste for the LIV Golf tournament at Rich Harvest Farms.",
-    image: "/images/photos/roll-off-containers.webp",
+    image: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/roll-off-containers",
   },
   {
     slug: "roll-off-dumpsters",
@@ -93,7 +93,7 @@ export const SERVICES: Service[] = [
     summary:
       "Need a dumpster on the driveway by Friday? Order one in minutes on our transactional site, midwestwaste.app.",
     appCta: true,
-    image: "/images/photos/roll-off-driveway.webp",
+    image: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/roll-off-driveway",
   },
 ];
 
@@ -101,8 +101,8 @@ export type ServiceArea = {
   slug: string;
   city: string;
   state: "IL";
-  // When true, cinematic town imagery exists at
-  // /images/areas/<slug>-hero.webp and /images/areas/<slug>-panel.webp.
+  // When true, cinematic town imagery is hosted on Cloudinary at
+  // mwc/images/areas/<slug>-hero and mwc/images/areas/<slug>-panel.
   hasImage?: boolean;
 };
 

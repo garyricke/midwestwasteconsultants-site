@@ -16,12 +16,12 @@ import { SITE, SERVICE_AREAS } from "../../config/site";
       loop
       playsinline
       preload="metadata"
-      poster="/images/photos/areas-hero.webp"
+      poster="https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/areas-hero"
       aria-label="Aerial tilt-shift view of a Fox Valley river town with a Midwest Waste truck crossing the bridge"
     >
-      <source src="/videos/areas-hero.mp4" type="video/mp4" />
+      <source src="https://res.cloudinary.com/dsbllwpbh/video/upload/f_auto,q_auto/mwc/videos/areas-hero.mp4" type="video/mp4" />
       <img
-        src="/images/photos/areas-hero.webp"
+        src="https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/areas-hero"
         alt="Aerial tilt-shift view of a Fox Valley river town with a Midwest Waste truck crossing the bridge"
         width="1600"
         height="900"
@@ -57,7 +57,7 @@ import { SITE, SERVICE_AREAS } from "../../config/site";
           >
             {a.hasImage ? (
               <img
-                src={`/images/areas/${a.slug}-panel.webp`}
+                src={`https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/areas/${a.slug}-panel`}
                 alt={`${a.city}, ${a.state} — Midwest Waste Consultants service area`}
                 width="800"
                 height="450"
