@@ -4,18 +4,18 @@ import CtaBand from "../components/CtaBand.astro";
 import Stars from "../components/Stars.astro";
 import { SITE, SERVICES, REVIEW_STATS } from "../config/site";
 
-// Hand-picked snippets from the Google reviews for the homepage carousel —
-// chosen for variety (residential, repeat, price vs. big haulers, commercial,
-// contractor, last-minute) and brevity. Full set lives on /reviews.
+// Hand-picked snippets for the full-bleed review carousel — short and punchy so
+// they can be set large, each paired with a contextual cinematic background.
+// Full set lives on /reviews.
 const featuredReviews = [
-  { body: "We rented a 15-yard dumpster for a home clean-up and couldn't be happier. Communication with Greg was fantastic, drop-off and pick-up were timely, and the price can't be beat.", author: "Erin and Travis Brown" },
-  { body: "Since switching from the “big” waste hauler to Midwest for half the cost, we haven't noticed any disruption in service. Tyler and Greg are professional, with no heavy-handed sales pitch.", author: "Cindy Ybarra" },
-  { body: "By far the best garbage experience I've had. We needed a large dumpster for a basement and garage cleanout, and Greg and team delivered same day at a great rate.", author: "Rachel Hyde" },
-  { body: "I use Midwest Waste for my two business locations. Super responsive, very competitively priced — they beat my current supplier — and just great people to work with.", author: "Belinda Demski" },
-  { body: "We're a disaster-mitigation contractor and our needs fluctuate by project. The quick response and flexibility Midwest provides is truly best-in-class service.", author: "Walter Sutphin" },
-  { body: "Great experience, great company. The 30-day rental was a game changer. Highly recommended — Greg is the best!", author: "Genel Thompson" },
-  { body: "Midwest Waste Consultants are THE BEST. Professional, reliable, and quick to respond to any question. Greg and Tyler really put their hearts into this business.", author: "Cheryl Kessler" },
-  { body: "Excellent experience. We needed a dumpster last minute — called the day before and confirmed the morning it was needed. We got it in record time.", author: "Diana Chapa" },
+  { body: "Couldn't be happier. Communication with Greg was fantastic, pick-up was timely, and the price can't be beat.", author: "Erin and Travis Brown", bg: "/images/reviews/home-driveway.webp" },
+  { body: "Switched from the big hauler to Midwest for half the cost — and zero drop in service.", author: "Cindy Ybarra", bg: "/images/reviews/dumpster-row.webp" },
+  { body: "By far the best garbage experience I've had — delivered same day, at a great rate.", author: "Rachel Hyde", bg: "/images/reviews/garage-dusk.webp" },
+  { body: "I use them for both my business locations. Super responsive, and they beat my supplier's price.", author: "Belinda Demski", bg: "/images/reviews/commercial-alley.webp" },
+  { body: "We're a disaster-mitigation contractor — their response and flexibility is best-in-class.", author: "Walter Sutphin", bg: "/images/reviews/debris-jobsite.webp" },
+  { body: "The 30-day rental was a game changer. Highly recommended — Greg is the best!", author: "Genel Thompson", bg: "/images/reviews/lone-sunset.webp" },
+  { body: "Simply THE BEST. Greg and Tyler really put their hearts into this business.", author: "Cheryl Kessler", bg: "/images/reviews/truck-sunrise.webp" },
+  { body: "Needed a dumpster last minute — called the day before, had it in record time.", author: "Diana Chapa", bg: "/images/reviews/delivery-dawn.webp" },
 ];
 
 const schema = [
@@ -125,42 +125,78 @@ const schema = [
           }
         </ul>
       </div>
-      <div class="rounded-2xl border border-rule bg-steel p-8" data-review-carousel aria-roledescription="carousel" aria-label="Customer reviews">
-        <div class="grid">
+      <div class="overflow-hidden rounded-2xl border border-rule shadow-lg">
+        <img src="/images/photos/roll-off-driveway.webp" alt="A Midwest Waste roll-off dumpster placed on a residential driveway" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS — full-bleed cinematic carousel -->
+  <section
+    class="relative isolate overflow-hidden bg-navy-deep"
+    data-review-carousel
+    aria-roledescription="carousel"
+    aria-label="Customer reviews"
+  >
+    <!-- Cross-fading background images, one per review -->
+    <div class="absolute inset-0">
+      {
+        featuredReviews.map((r, i) => (
+          <img
+            src={r.bg}
+            alt=""
+            aria-hidden="true"
+            data-bg
+            class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-out"
+            style={i === 0 ? "opacity:1" : "opacity:0"}
+            loading={i === 0 ? "eager" : "lazy"}
+          />
+        ))
+      }
+      <!-- Scrim for legibility: dark on the left where the text sits, clearing
+           to the right so the cinematic background reads through. -->
+      <div class="absolute inset-0 bg-gradient-to-r from-navy-deep/90 via-navy-deep/45 to-transparent"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-6xl px-6 py-28 sm:py-36">
+      <span class="eyebrow text-orange">What customers say</span>
+      <div class="mt-8 grid">
+        {
+          featuredReviews.map((r, i) => (
+            <figure
+              class="col-start-1 row-start-1 transition-opacity duration-700 ease-out"
+              data-slide
+              style={i === 0 ? "opacity:1" : "opacity:0;pointer-events:none"}
+              aria-hidden={i === 0 ? "false" : "true"}
+            >
+              <blockquote class="max-w-4xl text-3xl font-extrabold leading-[1.12] text-white sm:text-4xl lg:text-5xl">
+                “{r.body}”
+              </blockquote>
+              <figcaption class="mt-8 flex flex-wrap items-center gap-3">
+                <Stars rating={5} class="scale-110" />
+                <span class="font-display font-bold text-white">{r.author}</span>
+                <span class="text-white/60">· Google</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 flex items-center justify-between">
+        <div class="flex items-center gap-2.5" data-dots>
           {
-            featuredReviews.map((r, i) => (
-              <figure
-                class="col-start-1 row-start-1 transition-opacity duration-700 ease-out"
-                data-slide
-                style={i === 0 ? "opacity:1" : "opacity:0;pointer-events:none"}
-                aria-hidden={i === 0 ? "false" : "true"}
-              >
-                <blockquote class="font-display text-xl font-bold leading-snug text-navy">“{r.body}”</blockquote>
-                <figcaption class="mt-5 flex flex-wrap items-center gap-3">
-                  <Stars rating={5} />
-                  <span class="text-sm font-semibold text-navy">{r.author}</span>
-                  <span class="text-sm text-muted">· Google</span>
-                </figcaption>
-              </figure>
+            featuredReviews.map((_, i) => (
+              <button
+                type="button"
+                data-dot
+                aria-label={`Show review ${i + 1}`}
+                class="h-2.5 rounded-full transition-all duration-300"
+                style={i === 0 ? "width:1.5rem;background:#FF8200" : "width:0.625rem;background:rgba(255,255,255,0.35)"}
+              ></button>
             ))
           }
         </div>
-        <div class="mt-6 flex items-center justify-between">
-          <div class="flex items-center gap-2" data-dots>
-            {
-              featuredReviews.map((_, i) => (
-                <button
-                  type="button"
-                  data-dot
-                  aria-label={`Show review ${i + 1}`}
-                  class="h-2 rounded-full transition-all duration-300"
-                  style={i === 0 ? "width:1.25rem;background:#FF8200" : "width:0.5rem;background:rgba(20,40,73,0.2)"}
-                ></button>
-              ))
-            }
-          </div>
-          <a href="/reviews" class="font-display text-sm font-bold text-orange hover:underline">Read all reviews →</a>
-        </div>
+        <a href="/reviews" class="font-display text-sm font-bold text-orange hover:underline">Read all 64 reviews →</a>
       </div>
     </div>
   </section>
@@ -250,6 +286,7 @@ const schema = [
     const carousel = document.querySelector("[data-review-carousel]");
     if (carousel) {
       const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
+      const backgrounds = Array.from(carousel.querySelectorAll("[data-bg]"));
       const dots = Array.from(carousel.querySelectorAll("[data-dot]"));
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let idx = 0;
@@ -263,10 +300,13 @@ const schema = [
           s.style.pointerEvents = active ? "" : "none";
           s.setAttribute("aria-hidden", active ? "false" : "true");
         });
+        backgrounds.forEach((b, i) => {
+          b.style.opacity = i === idx ? "1" : "0";
+        });
         dots.forEach((d, i) => {
           const active = i === idx;
-          d.style.width = active ? "1.25rem" : "0.5rem";
-          d.style.background = active ? "#FF8200" : "rgba(20,40,73,0.2)";
+          d.style.width = active ? "1.5rem" : "0.625rem";
+          d.style.background = active ? "#FF8200" : "rgba(255,255,255,0.35)";
         });
       };
 
