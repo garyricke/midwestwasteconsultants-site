@@ -4,7 +4,7 @@ import PageGate from "../components/PageGate.astro";
 
 // Internal project status. Gated by PageGate + the admin panel; noindex so it
 // never lands in search or the sitemap.
-const updated = "June 29, 2026";
+const updated = "July 1, 2026";
 
 const pricing = [
   { size: "30 yard", price: "$585", inc: "3 tons" },
@@ -23,7 +23,8 @@ const mwcTodo = [
 
 const orbisTodo = [
   "Reconcile the two Google profiles — the full 64-review feed is now imported into the site's testimonial system.",
-  "Final visual polish on the consulting site once photos arrive.",
+  "Post-launch: replace the AI-generated placeholder hero/town imagery with real on-location photos, one at a time (shoot real photos, composite the actual truck, grade cinematic).",
+  "Final visual polish on the consulting site once real photos arrive.",
   "Build the ordering flow: calendar date pickers, 48-hr minimum, Mon–Fri delivery, driveway placement, add-ons.",
   "Research the full (state-by-state) prohibited-materials list and design a foolproof ordering interface.",
   "Build the hauler admin tool (zip-code coverage) + a copy-paste hauler-recruitment email template.",
@@ -161,7 +162,40 @@ const orbisTodo = [
       <ol class="mt-6 space-y-6 border-l-2 border-rule pl-6">
         <li class="relative">
           <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-orange"></span>
-          <p class="font-display text-xs font-bold uppercase tracking-wide text-orange">June 29, 2026 — Today</p>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-orange">July 1, 2026 — Today</p>
+          <p class="mt-1 font-semibold text-navy">Testimonials rebuilt as a cinematic, branded section.</p>
+          <p class="mt-1 text-sm text-muted">
+            The homepage reviews became their own full-bleed section: oversized
+            rotating Google quotes over cinematic "beautiful garbage" backgrounds —
+            one per quote — that cross-fade as the review changes. The Midwest Waste
+            bear logo was composited onto the dumpster or truck in all eight, so the
+            branding appears in every frame while staying photoreal. Auto-rotates,
+            pauses on hover, and respects reduced-motion. Unbranded versions kept for
+            easy revert.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">July 1, 2026</p>
+          <p class="mt-1 font-semibold text-navy">Cinematic hero imagery added + all media moved to Cloudinary.</p>
+          <p class="mt-1 text-sm text-muted">
+            Every public page now leads with a cinematic hero: all 20
+            <a href="/areas-we-serve" class="font-semibold text-navy underline">Areas We Serve</a>
+            towns got their own hero + card image (the real Midwest Waste truck
+            dropped into each Fox Valley community), and the page itself opens with a
+            tilt-shift aerial <strong>video</strong>. About, Services,
+            <a href="/resources" class="font-semibold text-navy underline">Resources</a> (podcast-in-the-cab),
+            Reviews, FAQ, and Contact (the historic Challenge Windmill riverfront office)
+            each got a branded hero, with the owners' likenesses locked to one approved reference.
+            These town/people shots are <strong>AI-generated placeholders</strong> to be
+            swapped for real on-location photos over time. Separately, all 124 images
+            plus the video were migrated to <strong>Cloudinary</strong> (auto AVIF/WebP,
+            per-device quality) — the repo no longer ships image binaries.
+          </p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[31px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-navy"></span>
+          <p class="font-display text-xs font-bold uppercase tracking-wide text-muted">June 29, 2026</p>
           <p class="mt-1 font-semibold text-navy">Full Google review feed imported.</p>
           <p class="mt-1 text-sm text-muted">
             Pulled the complete Google feed — 64 reviews — into the site's testimonial
