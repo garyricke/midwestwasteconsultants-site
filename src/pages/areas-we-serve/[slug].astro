@@ -15,12 +15,13 @@ const city = area.city;
 const CLD = "https://res.cloudinary.com/dsbllwpbh/image/upload";
 // Each slide: its Cloudinary public id + an optional per-slide crop (to reframe
 // so the truck clears the copy panel). Built URL: <crop>/<delivery>/<id>.
-const heroSlides: { id: string; crop?: string; panel: "left" | "right" }[] =
+const heroSlides: { id: string; crop?: string; panel: "left" | "right"; focus?: string }[] =
   area.hasImage && area.heroCount && area.heroCount > 1
     ? Array.from({ length: area.heroCount }, (_, i) => ({
         id: `${area.slug}-hero-${i + 1}`,
         crop: area.heroCrops?.[i + 1],
         panel: area.heroPanels?.[i + 1] ?? "right",
+        focus: area.heroFocus?.[i + 1],
       }))
     : area.hasImage
       ? [{ id: `${area.slug}-hero`, panel: "right" as const }]
@@ -79,6 +80,7 @@ const schema = [
               decoding="async"
               data-hero-slide={heroSlides.length > 1 ? i : undefined}
               data-panel={slide.panel}
+              style={slide.focus ? `object-position: ${slide.focus}` : undefined}
               class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${i === 0 ? "opacity-100" : "opacity-0"}`}
             />
           ))}

@@ -117,6 +117,10 @@ export type ServiceArea = {
   // keyed by 1-based hero slide number. Defaults to "right". Flip to "left" when
   // the truck/landmark sit on the right of the frame (e.g. Geneva windmill).
   heroPanels?: Record<number, "left" | "right">;
+  // Optional per-slide object-position (the hero crops top/bottom via object-cover),
+  // keyed by 1-based hero slide number. Defaults to center. Use a smaller Y (e.g.
+  // "50% 30%") to pan up and reveal a tall landmark's top + more sky.
+  heroFocus?: Record<number, string>;
 };
 
 // Fox Valley corridor, west of Chicago. Sourced from the live site.
@@ -127,7 +131,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
   { slug: "sugar-grove-il", city: "Sugar Grove", state: "IL", hasImage: true },
   { slug: "aurora-il", city: "Aurora", state: "IL", hasImage: true },
   { slug: "naperville-il", city: "Naperville", state: "IL", hasImage: true },
-  { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true, heroCount: 2, heroPanels: { 2: "left" } },
+  { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true, heroCount: 2, heroPanels: { 2: "left" }, heroFocus: { 1: "50% 30%" } },
   { slug: "st-charles-il", city: "St. Charles", state: "IL", hasImage: true },
   { slug: "batavia-il", city: "Batavia", state: "IL", hasImage: true, heroCount: 3, heroCrops: { 3: "c_crop,g_east,w_0.72" } },
   { slug: "north-aurora-il", city: "North Aurora", state: "IL", hasImage: true },
