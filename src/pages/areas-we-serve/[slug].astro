@@ -10,6 +10,23 @@ export function getStaticPaths() {
 const { area } = Astro.props;
 const city = area.city;
 
+// Hero imagery: a cross-fading carousel when the town has multiple cinematic
+// renders (heroCount), otherwise the single <slug>-hero image.
+const CLD = "https://res.cloudinary.com/dsbllwpbh/image/upload";
+// Each slide: its Cloudinary public id + an optional per-slide crop (to reframe
+// so the truck clears the copy panel). Built URL: <crop>/<delivery>/<id>.
+const heroSlides: { id: string; crop?: string }[] =
+  area.hasImage && area.heroCount && area.heroCount > 1
+    ? Array.from({ length: area.heroCount }, (_, i) => ({
+        id: `${area.slug}-hero-${i + 1}`,
+        crop: area.heroCrops?.[i + 1],
+      }))
+    : area.hasImage
+      ? [{ id: `${area.slug}-hero` }]
+      : [];
+const heroSrc = (s: { id: string; crop?: string }) =>
+  `${CLD}/${s.crop ? `${s.crop}/` : ""}f_auto,q_auto,w_1600,c_limit/mwc/images/areas/${s.id}`;
+
 // A few nearby communities for internal linking (excludes current city).
 const nearby = SERVICE_AREAS.filter((a) => a.slug !== area.slug).slice(0, 6);
 
@@ -38,37 +55,85 @@ const schema = [
   schema={schema}
 >
   <section class="relative isolate overflow-hidden bg-navy">
-    {area.hasImage && (
+    {heroSlides.length > 0 && (
       <>
-        <img
-          src={`https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/areas/${area.slug}-hero`}
-          alt={`${city}, ${area.state} — roll-off dumpster service from Midwest Waste Consultants`}
-          width="1600"
-          height="900"
-          fetchpriority="high"
-          decoding="async"
-          class="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
-        <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/40" aria-hidden="true" />
-        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-deep/70 to-transparent" aria-hidden="true" />
+        <div
+          class="absolute inset-0 -z-10"
+          data-hero-carousel={heroSlides.length > 1 ? "" : undefined}
+          role={heroSlides.length > 1 ? "group" : undefined}
+          aria-roledescription={heroSlides.length > 1 ? "carousel" : undefined}
+          aria-label={heroSlides.length > 1 ? `${city} scenes` : undefined}
+        >
+          {heroSlides.map((slide, i) => (
+            <img
+              src={heroSrc(slide)}
+              alt={`${city}, ${area.state} — Midwest Waste Consultants roll-off and waste service`}
+              width="1600"
+              height="1067"
+              fetchpriority={i === 0 ? "high" : undefined}
+              loading={i === 0 ? undefined : "lazy"}
+              decoding="async"
+              data-hero-slide={heroSlides.length > 1 ? i : undefined}
+              class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${i === 0 ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
+        </div>
+        {/* Soft scrim only along the very bottom, so the carousel controls stay legible
+            over bright photography without muting the image. */}
+        <div class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-navy-deep/45 to-transparent" aria-hidden="true" />
+        {heroSlides.length > 1 && (
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 z-10">
+            <div class="mx-auto flex max-w-6xl items-center justify-start gap-3 px-6 pb-5">
+              <button
+                type="button"
+                data-hero-prev
+                aria-label="Previous scene"
+                class="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-navy-deep/40 text-white backdrop-blur-sm transition-colors hover:border-orange hover:text-orange"
+              >
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <div class="pointer-events-auto flex items-center gap-2" data-hero-dots>
+                {heroSlides.map((_, i) => (
+                  <button
+                    type="button"
+                    data-hero-dot={i}
+                    aria-label={`Show scene ${i + 1} of ${heroSlides.length}`}
+                    class="h-2 w-2 rounded-full bg-white/40 transition-all hover:bg-white/70 aria-[current=true]:w-5 aria-[current=true]:bg-orange"
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                data-hero-next
+                aria-label="Next scene"
+                class="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-navy-deep/40 text-white backdrop-blur-sm transition-colors hover:border-orange hover:text-orange"
+              >
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        )}
       </>
     )}
     <div class="mx-auto max-w-6xl px-6 py-16 sm:py-24">
-      <nav class="mb-5 text-sm text-white/55" aria-label="Breadcrumb">
-        <a href="/areas-we-serve" class="hover:text-orange">Areas We Serve</a>
-        <span class="px-1.5">/</span>
-        <span class="text-white/80">{city}, {area.state}</span>
-      </nav>
-      <span class="eyebrow border-l-2 border-orange pl-3">Waste Management · {city}, {area.state}</span>
-      <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
-        Waste management &amp; roll-off dumpsters in {city}.
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg text-white/75">
-        Owner-operated service for {city} and the surrounding Fox Valley — backed by 30+ years and a top-rated reputation. Free estimates, and a real person on the phone.
-      </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact#quote" class="rounded-full bg-orange px-7 py-3.5 text-center font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">Get a free quote</a>
-        <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full border border-white/30 px-7 py-3.5 text-center font-display font-bold text-white transition-colors hover:bg-white/10">Order a dumpster ↗</a>
+      {/* Frosted-glass panel: blurs the rich photography behind the copy for legibility
+          while letting its warm color read through, instead of a flat dark overlay. */}
+      <div class={`max-w-2xl rounded-3xl p-6 sm:p-8 lg:ml-auto ${heroSlides.length > 0 ? "bg-navy-deep/55 supports-[backdrop-filter]:bg-navy-deep/30 backdrop-blur-[4px] ring-1 ring-white/10 shadow-2xl" : ""}`}>
+        <nav class="mb-5 text-sm text-white/65" aria-label="Breadcrumb">
+          <a href="/areas-we-serve" class="hover:text-orange">Areas We Serve</a>
+          <span class="px-1.5">/</span>
+          <span class="text-white/85">{city}, {area.state}</span>
+        </nav>
+        <h1 class="text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl">
+          Waste management &amp; roll-off dumpsters in {city}.
+        </h1>
+        <p class="mt-5 text-lg text-white/85">
+          Owner-operated service for {city} and the surrounding Fox Valley — backed by 30+ years and a top-rated reputation. Free estimates, and a real person on the phone.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact#quote" class="rounded-full bg-orange px-7 py-3.5 text-center font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">Get a free quote</a>
+          <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full border border-white/30 px-7 py-3.5 text-center font-display font-bold text-white transition-colors hover:bg-white/10">Order a dumpster ↗</a>
+        </div>
       </div>
     </div>
   </section>
@@ -117,3 +182,53 @@ const schema = [
 
   <CtaBand heading={`Serving ${city} and the whole Fox Valley.`} />
 </Layout>
+
+<script>
+  // Lightweight cross-fade hero carousel. No-op on pages without one.
+  function initHeroCarousel() {
+    const root = document.querySelector<HTMLElement>("[data-hero-carousel]");
+    if (!root) return;
+    const slides = Array.from(root.querySelectorAll<HTMLElement>("[data-hero-slide]"));
+    if (slides.length < 2) return;
+
+    const section = root.closest("section");
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-hero-dot]"));
+    const prev = document.querySelector<HTMLButtonElement>("[data-hero-prev]");
+    const next = document.querySelector<HTMLButtonElement>("[data-hero-next]");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const INTERVAL = 6000;
+
+    let index = 0;
+    let timer: number | undefined;
+
+    const show = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => s.style.opacity = n === index ? "1" : "0");
+      dots.forEach((d, n) => d.setAttribute("aria-current", String(n === index)));
+    };
+
+    const stop = () => { if (timer) { window.clearInterval(timer); timer = undefined; } };
+    const start = () => {
+      if (reduce) return;
+      stop();
+      timer = window.setInterval(() => show(index + 1), INTERVAL);
+    };
+
+    dots.forEach((d, n) => d.addEventListener("click", () => { show(n); start(); }));
+    prev?.addEventListener("click", () => { show(index - 1); start(); });
+    next?.addEventListener("click", () => { show(index + 1); start(); });
+
+    // Pause while the visitor is interacting or the tab/section is hidden.
+    section?.addEventListener("mouseenter", stop);
+    section?.addEventListener("mouseleave", start);
+    section?.addEventListener("focusin", stop);
+    section?.addEventListener("focusout", start);
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+
+    show(0);
+    start();
+  }
+
+  initHeroCarousel();
+  document.addEventListener("astro:page-load", initHeroCarousel);
+</script>

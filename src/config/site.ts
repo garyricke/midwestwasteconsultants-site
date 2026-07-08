@@ -104,6 +104,15 @@ export type ServiceArea = {
   // When true, cinematic town imagery is hosted on Cloudinary at
   // mwc/images/areas/<slug>-hero and mwc/images/areas/<slug>-panel.
   hasImage?: boolean;
+  // When set (>1), the town hero renders a cross-fading carousel pulling
+  // mwc/images/areas/<slug>-hero-1 … -N. Otherwise a single <slug>-hero is used.
+  // Real, on-location cinematic renders (golden-hour grade, dark/wet asphalt
+  // streets, brick left as brick, Midwest Waste truck composited in).
+  heroCount?: number;
+  // Optional per-slide Cloudinary crop applied BEFORE the delivery transform,
+  // keyed by 1-based hero slide number. Use to pan/reframe a shot so the truck
+  // clears the right-hand copy panel (e.g. a center-parked truck → "c_crop,g_east,w_0.72").
+  heroCrops?: Record<number, string>;
 };
 
 // Fox Valley corridor, west of Chicago. Sourced from the live site.
@@ -116,7 +125,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
   { slug: "naperville-il", city: "Naperville", state: "IL", hasImage: true },
   { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true },
   { slug: "st-charles-il", city: "St. Charles", state: "IL", hasImage: true },
-  { slug: "batavia-il", city: "Batavia", state: "IL", hasImage: true },
+  { slug: "batavia-il", city: "Batavia", state: "IL", hasImage: true, heroCount: 3, heroCrops: { 3: "c_crop,g_east,w_0.72" } },
   { slug: "north-aurora-il", city: "North Aurora", state: "IL", hasImage: true },
   { slug: "oswego-il", city: "Oswego", state: "IL", hasImage: true },
   { slug: "elburn-il", city: "Elburn", state: "IL", hasImage: true },

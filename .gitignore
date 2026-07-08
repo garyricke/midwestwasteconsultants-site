@@ -16,8 +16,13 @@ npm-debug.log*
 # internal planning docs (client emails, meeting notes, whois) — keep local
 plan/
 
-# AI image/video masters — only the optimized exports in public/ should ship
+# old-site reference scrape — local reference only, not versioned
+existing-site-scrape-8jul2026/
+
+# AI image/video masters — hosted on Cloudinary, never committed (raster masters
+# incl. on-location 360 source photos and cinematic town renders live here locally)
 generated_imgs/
+assets/
 veo3_video_*.mp4
 
 # macOS
