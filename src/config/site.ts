@@ -113,6 +113,10 @@ export type ServiceArea = {
   // keyed by 1-based hero slide number. Use to pan/reframe a shot so the truck
   // clears the right-hand copy panel (e.g. a center-parked truck → "c_crop,g_east,w_0.72").
   heroCrops?: Record<number, string>;
+  // Optional per-slide side for the frosted copy panel ("left" | "right"),
+  // keyed by 1-based hero slide number. Defaults to "right". Flip to "left" when
+  // the truck/landmark sit on the right of the frame (e.g. Geneva windmill).
+  heroPanels?: Record<number, "left" | "right">;
 };
 
 // Fox Valley corridor, west of Chicago. Sourced from the live site.
@@ -123,7 +127,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
   { slug: "sugar-grove-il", city: "Sugar Grove", state: "IL", hasImage: true },
   { slug: "aurora-il", city: "Aurora", state: "IL", hasImage: true },
   { slug: "naperville-il", city: "Naperville", state: "IL", hasImage: true },
-  { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true },
+  { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true, heroCount: 2, heroPanels: { 2: "left" } },
   { slug: "st-charles-il", city: "St. Charles", state: "IL", hasImage: true },
   { slug: "batavia-il", city: "Batavia", state: "IL", hasImage: true, heroCount: 3, heroCrops: { 3: "c_crop,g_east,w_0.72" } },
   { slug: "north-aurora-il", city: "North Aurora", state: "IL", hasImage: true },

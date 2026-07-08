@@ -15,17 +15,21 @@ const city = area.city;
 const CLD = "https://res.cloudinary.com/dsbllwpbh/image/upload";
 // Each slide: its Cloudinary public id + an optional per-slide crop (to reframe
 // so the truck clears the copy panel). Built URL: <crop>/<delivery>/<id>.
-const heroSlides: { id: string; crop?: string }[] =
+const heroSlides: { id: string; crop?: string; panel: "left" | "right" }[] =
   area.hasImage && area.heroCount && area.heroCount > 1
     ? Array.from({ length: area.heroCount }, (_, i) => ({
         id: `${area.slug}-hero-${i + 1}`,
         crop: area.heroCrops?.[i + 1],
+        panel: area.heroPanels?.[i + 1] ?? "right",
       }))
     : area.hasImage
-      ? [{ id: `${area.slug}-hero` }]
+      ? [{ id: `${area.slug}-hero`, panel: "right" as const }]
       : [];
 const heroSrc = (s: { id: string; crop?: string }) =>
   `${CLD}/${s.crop ? `${s.crop}/` : ""}f_auto,q_auto,w_1600,c_limit/mwc/images/areas/${s.id}`;
+// The frosted panel is a single element over the crossfading slides; it starts on
+// the first slide's side and the carousel repositions it as slides change.
+const initialPanel = heroSlides[0]?.panel ?? "right";
 
 // A few nearby communities for internal linking (excludes current city).
 const nearby = SERVICE_AREAS.filter((a) => a.slug !== area.slug).slice(0, 6);
@@ -74,6 +78,7 @@ const schema = [
               loading={i === 0 ? undefined : "lazy"}
               decoding="async"
               data-hero-slide={heroSlides.length > 1 ? i : undefined}
+              data-panel={slide.panel}
               class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${i === 0 ? "opacity-100" : "opacity-0"}`}
             />
           ))}
@@ -118,7 +123,10 @@ const schema = [
     <div class="mx-auto max-w-6xl px-6 py-16 sm:py-24">
       {/* Frosted-glass panel: blurs the rich photography behind the copy for legibility
           while letting its warm color read through, instead of a flat dark overlay. */}
-      <div class={`max-w-2xl rounded-3xl p-6 sm:p-8 lg:ml-auto ${heroSlides.length > 0 ? "bg-navy-deep/55 supports-[backdrop-filter]:bg-navy-deep/30 backdrop-blur-[4px] ring-1 ring-white/10 shadow-2xl" : ""}`}>
+      <div
+        data-hero-panel-card
+        class={`max-w-2xl rounded-3xl p-6 sm:p-8 transition-opacity duration-300 ${initialPanel === "right" ? "lg:ml-auto" : "lg:mr-auto"} ${heroSlides.length > 0 ? "bg-navy-deep/55 supports-[backdrop-filter]:bg-navy-deep/30 backdrop-blur-[4px] ring-1 ring-white/10 shadow-2xl" : ""}`}
+      >
         <nav class="mb-5 text-sm text-white/65" aria-label="Breadcrumb">
           <a href="/areas-we-serve" class="hover:text-orange">Areas We Serve</a>
           <span class="px-1.5">/</span>
@@ -195,16 +203,37 @@ const schema = [
     const dots = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-hero-dot]"));
     const prev = document.querySelector<HTMLButtonElement>("[data-hero-prev]");
     const next = document.querySelector<HTMLButtonElement>("[data-hero-next]");
+    const card = document.querySelector<HTMLElement>("[data-hero-panel-card]");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const INTERVAL = 6000;
 
     let index = 0;
     let timer: number | undefined;
 
+    // Move the frosted panel to the side that keeps this slide's truck/landmark
+    // clear. Fades the panel out/in so the copy doesn't visibly jump. A single
+    // tracked timer prevents overlapping fades (rapid clicks) from stranding it.
+    let panelTimer: number | undefined;
+    const positionPanel = (i: number) => {
+      if (!card) return;
+      const side = slides[i].dataset.panel === "left" ? "left" : "right";
+      const have = card.classList.contains("lg:mr-auto") ? "left" : "right";
+      if (side === have) { card.style.opacity = "1"; return; } // self-heal a stranded fade
+      if (panelTimer) window.clearTimeout(panelTimer);
+      card.style.opacity = "0";
+      panelTimer = window.setTimeout(() => {
+        card.classList.remove("lg:ml-auto", "lg:mr-auto");
+        card.classList.add(side === "left" ? "lg:mr-auto" : "lg:ml-auto");
+        card.style.opacity = "1";
+        panelTimer = undefined;
+      }, 300);
+    };
+
     const show = (i: number) => {
       index = (i + slides.length) % slides.length;
       slides.forEach((s, n) => s.style.opacity = n === index ? "1" : "0");
       dots.forEach((d, n) => d.setAttribute("aria-current", String(n === index)));
+      positionPanel(index);
     };
 
     const stop = () => { if (timer) { window.clearInterval(timer); timer = undefined; } };
