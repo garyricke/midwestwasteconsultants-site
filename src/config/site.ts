@@ -132,7 +132,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
   { slug: "aurora-il", city: "Aurora", state: "IL", hasImage: true },
   { slug: "naperville-il", city: "Naperville", state: "IL", hasImage: true },
   { slug: "geneva-il", city: "Geneva", state: "IL", hasImage: true, heroCount: 2, heroPanels: { 2: "left" }, heroFocus: { 1: "50% 30%" } },
-  { slug: "st-charles-il", city: "St. Charles", state: "IL", hasImage: true },
+  { slug: "st-charles-il", city: "St. Charles", state: "IL", hasImage: true, heroCount: 2, heroCrops: { 1: "c_crop,g_east,w_0.62", 2: "c_crop,g_east,w_0.80" } },
   { slug: "batavia-il", city: "Batavia", state: "IL", hasImage: true, heroCount: 3, heroCrops: { 3: "c_crop,g_east,w_0.72" } },
   { slug: "north-aurora-il", city: "North Aurora", state: "IL", hasImage: true },
   { slug: "oswego-il", city: "Oswego", state: "IL", hasImage: true },
