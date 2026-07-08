@@ -18,6 +18,22 @@ const featuredReviews = [
   { body: "Needed a dumpster last minute — called the day before, had it in record time.", author: "Diana Chapa", bg: "https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/reviews/delivery-dawn" },
 ];
 
+// Home hero background — cross-fades through the cinematic town renders
+// (Batavia, Geneva, St. Charles). Interleaved so each town shows up early.
+// Each slide carries its town so a tiny caption can name where we're hauling.
+const homeHeroSlides = [
+  { id: "batavia-il-hero-1", town: "Batavia" },
+  { id: "geneva-il-hero-1", town: "Geneva" },
+  { id: "st-charles-il-hero-1", town: "St. Charles" },
+  { id: "batavia-il-hero-2", town: "Batavia" },
+  { id: "geneva-il-hero-2", town: "Geneva" },
+  { id: "st-charles-il-hero-2", town: "St. Charles" },
+  { id: "batavia-il-hero-3", town: "Batavia" },
+].map((s) => ({
+  ...s,
+  src: `https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto,w_1920,c_limit/mwc/images/areas/${s.id}`,
+}));
+
 const schema = [
   {
     "@context": "https://schema.org",
@@ -46,33 +62,56 @@ const schema = [
 
 <Layout schema={schema}>
   <!-- HERO -->
-  <section class="relative overflow-hidden bg-navy">
-    <div class="absolute inset-0">
-      <img src="https://res.cloudinary.com/dsbllwpbh/image/upload/f_auto,q_auto/mwc/images/photos/truck-logo" alt="" class="h-full w-full object-cover opacity-80" />
-      <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/35"></div>
+  <section class="relative isolate overflow-hidden bg-navy">
+    <div class="absolute inset-0 -z-10" data-home-hero>
+      {homeHeroSlides.map((slide, i) => (
+        <img
+          src={slide.src}
+          alt=""
+          data-home-slide={i}
+          data-town={slide.town}
+          loading="eager"
+          fetchpriority={i === 0 ? "high" : "low"}
+          decoding="async"
+          style={`opacity:${i === 0 ? "1" : "0"}`}
+          class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-out"
+        />
+      ))}
     </div>
-    <div class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <span class="eyebrow border-l-2 border-orange pl-3">Waste Consulting · Brokering · Sustainability</span>
-      <h1 class="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
-        Stop throwing your money in the trash.
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
-        Most businesses overpay for waste service and never know it — buried in
-        surcharges, locked into auto-renewals, hauling half-empty containers. We
-        sit on <em>your</em> side of the table. Owner-operated, 30+ years in the
-        field, and a nationwide vendor network behind every recommendation.
-      </p>
-      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact#quote" class="rounded-full bg-orange px-8 py-4 text-center font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">
-          Get a Free Waste Review
-        </a>
-        <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full border border-white/30 px-8 py-4 text-center font-display font-bold text-white transition-colors hover:bg-white/10">
-          Need a dumpster now? →
-        </a>
-      </div>
-      <div class="mt-10 flex items-center gap-3 text-sm text-white/70">
-        <Stars rating={5} />
-        <span><span class="font-bold text-white">{REVIEW_STATS.average.toFixed(1)}</span> from {REVIEW_STATS.count} Google reviews</span>
+    {/* Tiny corner caption naming the town in the current slide. */}
+    <p
+      data-home-caption
+      class="pointer-events-none absolute bottom-4 right-5 z-10 text-[11px] font-medium uppercase tracking-wider text-white/80 transition-opacity duration-500 [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]"
+    >
+      Hauling waste in {homeHeroSlides[0].town}
+    </p>
+    <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+      {/* Frosted-glass panel: blurs the cinematic town photography behind the copy
+          for legibility while letting the full color read through, matching the
+          town hero pages — instead of a flat dark gradient over the whole image. */}
+      <div class="max-w-2xl rounded-3xl p-6 sm:p-8 bg-navy-deep/55 supports-[backdrop-filter]:bg-navy-deep/30 backdrop-blur-[4px] ring-1 ring-white/10 shadow-2xl">
+        <span class="eyebrow border-l-2 border-orange pl-3">Waste Consulting · Brokering · Sustainability</span>
+        <h1 class="mt-5 text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+          Stop throwing your money in the trash.
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-white/85">
+          Most businesses overpay for waste service and never know it — buried in
+          surcharges, locked into auto-renewals, hauling half-empty containers. We
+          sit on <em>your</em> side of the table. Owner-operated, 30+ years in the
+          field, and a nationwide vendor network behind every recommendation.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact#quote" class="rounded-full bg-orange px-8 py-4 text-center font-display font-extrabold text-navy-deep transition-transform hover:-translate-y-0.5">
+            Get a Free Waste Review
+          </a>
+          <a href={SITE.appUrl} target="_blank" rel="noopener" class="rounded-full border border-white/30 px-8 py-4 text-center font-display font-bold text-white transition-colors hover:bg-white/10">
+            Need a dumpster now? →
+          </a>
+        </div>
+        <div class="mt-10 flex items-center gap-3 text-sm text-white/70">
+          <Stars rating={5} />
+          <span><span class="font-bold text-white">{REVIEW_STATS.average.toFixed(1)}</span> from {REVIEW_STATS.count} Google reviews</span>
+        </div>
       </div>
     </div>
   </section>
@@ -279,6 +318,39 @@ const schema = [
   </section>
 
   <CtaBand />
+
+  <script>
+    // Home hero: cross-fade through the cinematic town renders. Auto-advances,
+    // pauses when the tab is hidden, and honors reduced-motion (holds slide 1).
+    const heroWrap = document.querySelector("[data-home-hero]");
+    if (heroWrap) {
+      const heroSlides = Array.from(heroWrap.querySelectorAll("[data-home-slide]"));
+      const heroCaption = document.querySelector("[data-home-caption]");
+      const heroReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let heroIdx = 0;
+      let heroTimer;
+
+      const heroShow = (n) => {
+        heroIdx = (n + heroSlides.length) % heroSlides.length;
+        heroSlides.forEach((s, i) => {
+          s.style.opacity = i === heroIdx ? "1" : "0";
+        });
+        const town = heroSlides[heroIdx].dataset.town;
+        if (heroCaption && town) heroCaption.textContent = `Hauling waste in ${town}`;
+      };
+      const heroStart = () => {
+        heroStop();
+        if (!heroReduce && heroSlides.length > 1)
+          heroTimer = window.setInterval(() => heroShow(heroIdx + 1), 6000);
+      };
+      const heroStop = () => heroTimer && window.clearInterval(heroTimer);
+
+      document.addEventListener("visibilitychange", () =>
+        document.hidden ? heroStop() : heroStart()
+      );
+      heroStart();
+    }
+  </script>
 
   <script>
     // Auto-rotating review carousel: fades between slides, pauses on hover/focus,
