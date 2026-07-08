@@ -13,6 +13,10 @@
 /about-us                       /about                                  301!
 /faqs                           /faq                                    301!
 
+# --- Old Naperville intent pages (no 1:1 equivalent) ---
+/areas-we-serve/commercial-waste-disposal-in-naperville-il  /areas-we-serve/naperville-il     301!
+/areas-we-serve/event-waste-management-naperville-il        /services/event-waste-management  301!
+
 # --- Local city pages (multiple old prefixes) → new areas-we-serve slugs ---
 # Old slug pattern: waste-management-company-<city>-il  → <city>-il
 /service-area/waste-management-company-*   /areas-we-serve/:splat       301!
